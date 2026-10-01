@@ -42,11 +42,11 @@ export default function App() {
       {/* Main Dynamic View Area */}
       <main className="flex-1">
         {activeTab === "home" && <HomeView onNavigate={handleNavigate} />}
-        {activeTab === "vastu-interiors" && <VastuInteriorsView onNavigate={handleNavigate} />}
+        {(activeTab === "vastu-interiors" || activeTab === "about") && <VastuInteriorsView onNavigate={handleNavigate} />}
         {activeTab === "vastu" && <VastuView onNavigate={handleNavigate} />}
         {activeTab === "interiors" && <InteriorsView onNavigate={handleNavigate} />}
-        {activeTab === "services" && <ServicesView onNavigate={handleNavigate} />}
-        {activeTab === "tools" && <ToolsView />}
+        {(activeTab === "services" || activeTab === "astrology") && <ServicesView onNavigate={handleNavigate} />}
+        {(activeTab === "tools" || activeTab === "numerology") && <ToolsView />}
         {activeTab === "insights" && <InsightsView onNavigate={handleNavigate} />}
         {activeTab === "consultation" && <ConsultationView />}
         {activeTab === "contact" && <ContactView onNavigate={handleNavigate} />}

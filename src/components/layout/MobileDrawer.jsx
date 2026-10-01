@@ -8,14 +8,12 @@ export default function MobileDrawer({ isOpen, onClose, currentTab, onNavigate }
 
   const navLinks = [
     { id: "home", label: "Home", icon: Home },
-    { id: "services", label: "All Services", icon: Layers },
-    { id: "vastu", label: "Vastu Shastra & Compass", icon: Compass },
-    { id: "interiors", label: "Interior Portfolio", icon: Home },
-    { id: "vastu-interiors", label: "Vastu × Interiors", icon: Sparkles },
-    { id: "tools", label: "Interactive Tools", icon: Compass },
-    { id: "insights", label: "Editorial Insights", icon: BookOpen },
-    { id: "consultation", label: "Request Consultation", icon: MessageCircle },
-    { id: "contact", label: "Studio Contact", icon: Phone }
+    { id: "astrology", label: "Astrology", icon: Sparkles },
+    { id: "vastu", label: "Vastu", icon: Compass },
+    { id: "numerology", label: "Numerology", icon: Layers },
+    { id: "interiors", label: "Interiors", icon: Home },
+    { id: "about", label: "About", icon: BookOpen },
+    { id: "contact", label: "Contact", icon: Phone }
   ];
 
   const handleLinkClick = (tabId) => {
