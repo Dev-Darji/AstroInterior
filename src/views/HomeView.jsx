@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ArrowRight, MessageCircle } from 'lucide-react';
+import { ArrowRight, MessageCircle, MapPin } from 'lucide-react';
 import { projects } from '../data/projects';
 import { testimonials } from '../data/testimonials';
 import { getWhatsAppLink } from '../data/siteConfig';
@@ -180,36 +180,65 @@ export default function HomeView({ onNavigate }) {
           Where Energy Meets Design
           ═══════════════════════════════════════════════════════ */}
       <section
-        className="relative min-h-hero flex items-center overflow-hidden"
+        className="relative min-h-hero flex items-end lg:items-center overflow-hidden"
         style={{
           background: 'linear-gradient(145deg, #070A14 0%, #0D1326 35%, #121524 70%, #161514 100%)'
         }}
       >
+        {/* Interior photograph — full colour; only the edge meeting the text is darkened */}
+        <div className="absolute inset-0 lg:left-auto lg:w-[58%] pointer-events-none" aria-hidden="true">
+          <img
+            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85"
+            srcSet={[900, 1300, 1800].map((w) => `https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=${w}&q=82 ${w}w`).join(", ")}
+            sizes="(min-width: 1024px) 58vw, 100vw"
+            alt=""
+            fetchPriority="high"
+            className="w-full h-full object-cover object-[60%_center] saturate-[1.05]"
+          />
+          {/* Mobile: photo reads in the upper half, text sits on a deep fade below */}
+          <div className="absolute inset-0 lg:hidden bg-gradient-to-t from-[#070A14] via-[#070A14]/85 via-45% to-[#070A14]/25" />
+          {/* Desktop: soft blend into the navy on the left, light vignette for the nav and footer edge */}
+          <div className="absolute inset-y-0 left-0 w-[45%] hidden lg:block bg-gradient-to-r from-[#0C1124] via-[#0C1124]/70 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-36 hidden lg:block bg-gradient-to-b from-[#070A14]/75 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-40 hidden lg:block bg-gradient-to-t from-[#121524]/80 to-transparent" />
+          <div className="absolute inset-0 bg-[#B89758]/[0.06] mix-blend-soft-light" />
+        </div>
+
         {/* Subtle Constellation Star Field */}
         <StarField />
 
         {/* Slowly rotating Kundli chart geometry in background */}
         <div
-          className="absolute left-[-5%] sm:left-[5%] lg:left-[8%] top-1/2 -translate-y-1/2 w-[380px] h-[380px] sm:w-[500px] sm:h-[500px] lg:w-[620px] lg:h-[620px] text-[#B89758] celestial-rotate pointer-events-none opacity-40 sm:opacity-50"
+          className="absolute left-[-30%] sm:left-[5%] lg:left-[6%] top-[62%] lg:top-1/2 -translate-y-1/2 w-[420px] h-[420px] sm:w-[500px] sm:h-[500px] lg:w-[600px] lg:h-[600px] text-[#B89758] celestial-rotate pointer-events-none opacity-60 sm:opacity-75 [filter:brightness(1.25)_drop-shadow(0_0_6px_rgba(222,198,149,0.25))]"
           aria-hidden="true"
         >
           <KundliChartSVG className="w-full h-full" />
         </div>
 
-        {/* Architectural Image — Subtle right-hand ambient layer with celestial gradient blending */}
-        <div className="absolute right-0 top-0 bottom-0 w-[55%] hidden lg:block pointer-events-none" aria-hidden="true">
-          <img
-            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"
-            alt="Contemporary Indian living sanctuary with warm teak wood and Vastu spatial alignment"
-            fetchPriority="high"
-            className="w-full h-full object-cover opacity-45 mix-blend-luminosity filter contrast-125"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#070A14] via-[#0D1326]/90 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#161514] via-transparent to-[#070A14]/70" />
-        </div>
+        {/* Featured project card floating over the photograph */}
+        <button
+          onClick={() => onNavigate('interiors')}
+          className="hero-animate hero-animate-delay-5 hidden lg:flex absolute z-10 right-8 xl:right-14 bottom-24 w-72 flex-col gap-3 text-left p-5 rounded-2xl bg-[#0A0E1C]/70 backdrop-blur-xl border border-[#DEC695]/25 shadow-2xl hover:border-[#DEC695]/60 transition-colors group"
+        >
+          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#DEC695]">Featured Residence</span>
+          <span>
+            <span className="block font-serif text-xl text-[#FDFBF7] leading-tight">The Earth & Light Residence</span>
+            <span className="flex items-center gap-1.5 text-[11px] text-[#D8CEBE]/70 mt-1">
+              <MapPin size={11} className="text-[#DEC695]" />Bodakdev, Ahmedabad
+            </span>
+          </span>
+          <span className="flex flex-wrap gap-1.5">
+            {["NE · Morning light", "SW · Earth tones", "Open Brahmasthan"].map((tag) => (
+              <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full border border-[#DEC695]/30 text-[#F3E2B8]">{tag}</span>
+            ))}
+          </span>
+          <span className="flex items-center gap-1.5 text-xs text-[#DEC695] group-hover:gap-2.5 transition-all">
+            View the project <ArrowRight size={13} />
+          </span>
+        </button>
 
         {/* Hero Content Container */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-32 pb-20 lg:pt-36 lg:pb-28">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-40 pb-28 sm:pb-20 lg:pt-36 lg:pb-28">
           <div className="max-w-2xl space-y-6 sm:space-y-7">
             
             {/* Small Eyebrow */}
@@ -339,7 +368,7 @@ export default function HomeView({ onNavigate }) {
               className="reveal reveal-delay-2 group rounded-3xl p-8 sm:p-10 flex flex-col justify-between cursor-pointer transition-all duration-300 relative overflow-hidden bg-[#F7F3EB] border border-[#EFE8DC] hover:border-[#B89758]/50 hover:bg-[#F3EFE5]"
             >
               {/* Subtle background sacred numeral */}
-              <div className="absolute -bottom-6 -right-6 w-36 h-36 opacity-15 pointer-events-none">
+              <div className="absolute -bottom-6 -right-6 w-36 h-36 opacity-60 pointer-events-none [filter:brightness(0.5)_saturate(1.5)]">
                 <NumerologyGeometrySVG className="w-full h-full" />
               </div>
 
@@ -388,7 +417,7 @@ export default function HomeView({ onNavigate }) {
               className="reveal reveal-delay-3 group rounded-3xl p-8 sm:p-10 flex flex-col justify-between cursor-pointer transition-all duration-300 relative overflow-hidden bg-[#F7F3EB] border border-[#EFE8DC] hover:border-[#607261]/50 hover:bg-[#F3EFE5]"
             >
               {/* Subtle compass geometry in background */}
-              <div className="absolute -bottom-8 -right-8 w-40 h-40 opacity-20 pointer-events-none">
+              <div className="absolute -bottom-12 -right-12 w-56 h-56 opacity-90 pointer-events-none celestial-rotate [filter:brightness(0.42)_saturate(1.6)]">
                 <VastuCompassSVG className="w-full h-full" />
               </div>
 
