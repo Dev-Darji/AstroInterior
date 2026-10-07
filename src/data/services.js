@@ -4,7 +4,7 @@ export const serviceCategories = [
     title: "Understand Myself",
     subtitle: "Astrology + Numerology",
     tagline: "Archetypes, Planetary Rhythms & Personal Numbers",
-    description: "Decode your foundational blueprint through Vedic Kundli analysis and Pythagorean numerology to align life decisions and living spaces.",
+    description: "Decode your foundational blueprint through Vedic Kundli analysis and Chaldean numerology to align life decisions and living spaces.",
     accent: "#B89758",
     image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
     features: [

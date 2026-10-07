@@ -1,361 +1,268 @@
-import React, { useState } from 'react';
-import { Sparkles, ArrowRight, MessageCircle, RotateCcw, Home, Info } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { Sparkles, MessageCircle, Pencil, Home, Compass, Info, User, Calendar, CalendarClock, Gem } from 'lucide-react';
 import { getWhatsAppLink } from '../../data/siteConfig';
+import { PLANETS, DIRECTION_NAMES } from '../../lib/astroData';
+import {
+  computeNumerology, NUMBER_PROFILE, NUMBER_PLANET, LO_SHU_LAYOUT, LO_SHU_DIRECTION,
+  MISSING_REMEDY, PERSONAL_YEAR_THEME, KUA_DIRECTIONS, KUA_LABELS
+} from '../../lib/numerology';
 
-const numberArchetypes = {
-  1: {
-    title: "The Pioneer & Originator",
-    ruler: "The Sun (Surya)",
-    element: "Fire / Light",
-    spatialTraits: "Thrives in high-ceiling, expansive rooms with bold focal points, abundant natural sunlight, and a dedicated executive desk facing East.",
-    colors: ["Warm Sunlight Gold", "Rich Terracotta", "Alabaster White"],
-    materials: "Travertine stone, bold architectural lines, polished brass"
-  },
-  2: {
-    title: "The Peacemaker & Harmonizer",
-    ruler: "The Moon (Chandra)",
-    element: "Water",
-    spatialTraits: "Requires soft, curved silhouettes, soothing indirect lighting (2700K), tactile bouclé fabrics, and peaceful water features or botanical gardens.",
-    colors: ["Pearl White", "Soft Mint", "Seafoam Grey", "Pale Cream"],
-    materials: "Handspun raw linen, light oak, frosted textured glass"
-  },
-  3: {
-    title: "The Creator & Expressive Visionary",
-    ruler: "Jupiter (Brihaspati)",
-    element: "Space / Akasha",
-    spatialTraits: "Craves inspiring gallery walls, creative studio spaces, expressive artwork, and versatile open-plan entertainment zones.",
-    colors: ["Warm Amber", "Ochre Gold", "Sage Green", "Charcoal accents"],
-    materials: "Reclaimed teak wood, statement woven rugs, artisanal ceramics"
-  },
-  4: {
-    title: "The Master Builder & Strategist",
-    ruler: "Rahu / Uranus",
-    element: "Earth (Prithvi)",
-    spatialTraits: "Values geometric order, symmetrical architectural alignments, substantial storage, and deeply grounded South-West master suites.",
-    colors: ["Grounded Earth Brown", "Warm Taupe", "Slate Grey", "Sand"],
-    materials: "Solid American walnut, vein-matched marble, architectural fluting"
-  },
-  5: {
-    title: "The Free Spirit & Alchemist",
-    ruler: "Mercury (Budha)",
-    element: "Air (Vayu)",
-    spatialTraits: "Loves dynamic multifunctional spaces, seamless indoor-outdoor balcony flow, modular furniture, and sensory textures.",
-    colors: ["Soft Olive", "Ecru", "Emerald accents", "Warm Ivory"],
-    materials: "Rattan, light ash wood, large sliding glass apertures"
-  },
-  6: {
-    title: "The Nurturer & Aesthetician",
-    ruler: "Venus (Shukra)",
-    element: "Earth & Water",
-    spatialTraits: "The ultimate home-creator. Prioritizes comfortable open family dining tables, cozy hearths, plush bedding, and serene pooja shrines.",
-    colors: ["Blush Taupe", "Warm Almond", "Rose Gold", "Muted Sage"],
-    materials: "Velvet drapes, honed limestone, warm brushed brass"
-  },
-  7: {
-    title: "The Seeker & Philosophical Thinker",
-    ruler: "Ketu / Neptune",
-    element: "Water & Space",
-    spatialTraits: "Requires extreme quiet, contemplation libraries, acoustic wall buffering, secluded reading alcoves, and clutter-free Zen minimalism.",
-    colors: ["Deep Indigo", "Makrana White", "Silver Mist", "Ash Grey"],
-    materials: "Natural micro-cement, acoustic fabric panels, bamboo, white marble"
-  },
-  8: {
-    title: "The Sovereign & Executive Power",
-    ruler: "Saturn (Shani)",
-    element: "Earth & Fire",
-    spatialTraits: "Commands architectural grandeur, statement double-height fireplaces, authoritative leather furniture, and monumental stone facades.",
-    colors: ["Deep Charcoal", "Dark Bronze", "Warm Sandstone", "Cognac Leather"],
-    materials: "Armani bronze marble, blackened steel, heavy solid timber"
-  },
-  9: {
-    title: "The Humanitarian & Universalist",
-    ruler: "Mars (Mangal)",
-    element: "Fire & Earth",
-    spatialTraits: "Thrives in globally inspired spaces celebrating craft heritage, organic biophilic courtyards, and warm gathering pavilions.",
-    colors: ["Terracotta Clay", "Brick Red", "Warm Ochre", "Natural Bone"],
-    materials: "Handmade clay tiles, exposed lime brick, hand-hammered metals"
-  },
-  11: {
-    title: "Master 11: The Intuitive Illuminator",
-    ruler: "High Octane Moon & Neptune",
-    element: "Pure Light & Space",
-    spatialTraits: "High vibrational nervous system. Demands circadian lighting, zero electromagnetic clutter near sleep zones, and meditative sanctity.",
-    colors: ["Pure Alabaster", "Iridescent Champagne", "Pale Sky"],
-    materials: "Backlit translucent onyx, acoustic lime plaster, silk rugs"
-  },
-  22: {
-    title: "Master 22: The Master Architect",
-    ruler: "Cosmic Earth & Structure",
-    element: "Universal Earth",
-    spatialTraits: "The visionary builder. Demands timeless sustainable architecture, grand structural proportions, and biophilic legacy design.",
-    colors: ["Forest Green", "Imperial Bronze", "Granite Charcoal", "Warm Sand"],
-    materials: "Exposed concrete, monumental granite, solid native woods"
-  },
-  33: {
-    title: "Master 33: The Universal Healer",
-    ruler: "High Octane Compassion",
-    element: "Harmonic Water",
-    spatialTraits: "A nurturing sanctuary serving family and community with open, light-drenched communal kitchens and tranquil inner gardens.",
-    colors: ["Warm Ivory", "Sage Green", "Soft Gold", "Alabaster"],
-    materials: "Honed travertine, living indoor plants, hand-spun textiles"
-  }
+const HARMONY = {
+  excellent: { label: "Excellent", cls: "text-[#9FD6A8] border-[#9FD6A8]/40 bg-[#9FD6A8]/10" },
+  good: { label: "Supportive", cls: "text-[#DEC695] border-[#DEC695]/40 bg-[#DEC695]/10" },
+  neutral: { label: "Neutral", cls: "text-[#E8E2D4]/80 border-white/15 bg-white/5" },
+  challenging: { label: "Challenging", cls: "text-[#F0A58A] border-[#F0A58A]/40 bg-[#F0A58A]/10" }
 };
 
-// Calculate single digit sum with master numbers preservation
-function reduceNumber(num, preserveMaster = true) {
-  while (num > 9) {
-    if (preserveMaster && (num === 11 || num === 22 || num === 33)) {
-      return num;
-    }
-    num = num.toString().split('').reduce((acc, digit) => acc + parseInt(digit, 10), 0);
-  }
-  return num;
+function Medallion({ label, value, sub, ruler, featured }) {
+  return (
+    <div className={`${featured ? "astro-card-glow" : "astro-card"} p-5 text-center`}>
+      <span className="astro-label">{label}</span>
+      <div className="relative w-24 h-24 mx-auto my-3 flex items-center justify-center">
+        <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full" aria-hidden="true">
+          <circle cx="50" cy="50" r="47" fill="none" stroke="#DEC695" strokeWidth="0.8" opacity="0.5" />
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#DEC695" strokeWidth="0.5" strokeDasharray="2 3" opacity="0.5" />
+        </svg>
+        <span className="font-serif text-5xl text-gold-gradient leading-none">{value ?? "–"}</span>
+      </div>
+      <p className="text-xs text-[#F5EFE2]">{ruler}</p>
+      <p className="text-[11px] text-[#E8E2D4]/55 mt-0.5">{sub}</p>
+    </div>
+  );
 }
 
-// Letter value mapping (Pythagorean)
-const letterValues = {
-  A: 1, J: 1, S: 1,
-  B: 2, K: 2, T: 2,
-  C: 3, L: 3, U: 3,
-  D: 4, M: 4, V: 4,
-  E: 5, N: 5, W: 5,
-  F: 6, O: 6, X: 6,
-  G: 7, P: 7, Y: 7,
-  H: 8, Q: 8, Z: 8,
-  I: 9, R: 9
-};
-
 export default function NumerologyCalculator() {
-  const [fullName, setFullName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const [form, setForm] = useState({ name: "", dob: "", kua: "" });
   const [result, setResult] = useState(null);
-  const [isCalculating, setIsCalculating] = useState(false);
+  const resultRef = useRef(null);
 
-  const calculateNumbers = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!birthDate) return;
-
-    setIsCalculating(true);
-
-    setTimeout(() => {
-      // 1. Life Path Number from birthdate
-      const dateParts = birthDate.split('-'); // [YYYY, MM, DD]
-      const yearSum = reduceNumber(parseInt(dateParts[0], 10), false);
-      const monthSum = reduceNumber(parseInt(dateParts[1], 10), false);
-      const daySum = reduceNumber(parseInt(dateParts[2], 10), false);
-      const lifePath = reduceNumber(yearSum + monthSum + daySum, true);
-
-      // 2. Destiny (Expression) Number from Name
-      let destiny = 7; // default fallback
-      let soulUrge = 3;
-      if (fullName.trim()) {
-        const cleanName = fullName.toUpperCase().replace(/[^A-Z]/g, '');
-        let totalVal = 0;
-        let vowelVal = 0;
-        const vowels = ['A', 'E', 'I', 'O', 'U'];
-
-        for (let char of cleanName) {
-          const val = letterValues[char] || 0;
-          totalVal += val;
-          if (vowels.includes(char)) {
-            vowelVal += val;
-          }
-        }
-
-        destiny = totalVal > 0 ? reduceNumber(totalVal, true) : 7;
-        soulUrge = vowelVal > 0 ? reduceNumber(vowelVal, true) : 3;
-      }
-
-      const archetype = numberArchetypes[lifePath] || numberArchetypes[reduceNumber(lifePath, false)] || numberArchetypes[7];
-
-      setResult({
-        lifePath,
-        destiny,
-        soulUrge,
-        archetype
-      });
-
-      setIsCalculating(false);
-    }, 450);
+    if (!form.dob) return;
+    setResult({ ...computeNumerology({ name: form.name, dob: form.dob, kuaFormula: form.kua || null }), name: form.name });
+    setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
   };
 
-  const handleReset = () => {
-    setResult(null);
-    setBirthDate("");
-    setFullName("");
-  };
+  if (!result) {
+    return (
+      <div className="astro-panel p-5 sm:p-8 md:p-10">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+          <div className="lg:col-span-5 space-y-4">
+            <span className="astro-label">Ank Jyotish · Chaldean System</span>
+            <h3 className="font-serif text-3xl sm:text-4xl text-[#F5EFE2] leading-tight">
+              Decode the <span className="italic text-gold-gradient">numbers you were born with</span>
+            </h3>
+            <p className="text-sm text-[#E8E2D4]/70 leading-relaxed">
+              Indian numerology links every number to a graha. We compute your Mulank, Bhagyank and Chaldean name number,
+              map your birth date onto the Lo Shu grid and translate it into directions and design choices for your home.
+            </p>
+            <div className="grid grid-cols-3 gap-2 max-w-sm">
+              {LO_SHU_LAYOUT.flat().map((n) => (
+                <div key={n} className="aspect-square rounded-lg border border-[#DEC695]/20 flex items-center justify-center font-serif text-2xl text-[#DEC695]/70">
+                  {n}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="lg:col-span-7 astro-card p-5 sm:p-7 space-y-5">
+            <div>
+              <label htmlFor="n-name" className="astro-label mb-2 flex items-center gap-1.5"><User size={12} />Name you use daily</label>
+              <input id="n-name" required className="astro-input" placeholder="e.g. Ananya Patel"
+                value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+              <p className="text-[11px] text-[#E8E2D4]/45 mt-1.5">Your Naamank vibrates through the name you sign and are called by.</p>
+            </div>
+            <div>
+              <label htmlFor="n-dob" className="astro-label mb-2 flex items-center gap-1.5"><Calendar size={12} />Date of Birth</label>
+              <input id="n-dob" type="date" required min="1900-01-01" max="2100-12-31" className="astro-input"
+                value={form.dob} onChange={(e) => setForm({ ...form, dob: e.target.value })} />
+            </div>
+            <div>
+              <span className="astro-label mb-2 flex items-center gap-1.5"><Compass size={12} />Kua directions (optional)</span>
+              <div className="grid grid-cols-3 gap-2">
+                {[["", "Skip"], ["male", "Male formula"], ["female", "Female formula"]].map(([v, label]) => (
+                  <button type="button" key={v || "skip"} data-active={form.kua === v} onClick={() => setForm({ ...form, kua: v })}
+                    className="astro-chip px-2 py-2.5 text-xs">
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <p className="text-[11px] text-[#E8E2D4]/45 mt-1.5">The traditional Kua calculation differs by gender and reveals your four best directions for sleeping and working.</p>
+            </div>
+            <button type="submit" className="astro-btn w-full"><Sparkles size={16} />Reveal My Numbers</button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  const r = result;
+  const profile = NUMBER_PROFILE[r.mulank];
+  const planet = PLANETS[r.ruler];
 
   return (
-    <div className="bg-[#F7F3EB] border border-[#EFE8DC] rounded-3xl p-6 md:p-10 shadow-sm max-w-4xl mx-auto">
-      <div className="text-center max-w-2xl mx-auto mb-8">
-        <span className="editorial-subheading text-[#B89758]">Sacred Geometry & Vibrations</span>
-        <h3 className="font-serif text-3xl sm:text-4xl text-[#161514] mt-1 font-normal">
-          Interactive Numerology & Spatial Resonance
-        </h3>
-        <p className="text-xs sm:text-sm text-[#634832] mt-2 leading-relaxed">
-          Discover how your foundational Life Path number resonates with specific architectural proportions, materials, and color frequencies.
+    <div ref={resultRef} className="space-y-6 scroll-mt-28 astro-fade-in">
+      <div className="astro-panel p-5 sm:p-7 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="min-w-0">
+          <span className="astro-label">Numerology Profile</span>
+          <h3 className="font-serif text-3xl sm:text-4xl text-[#F5EFE2] leading-tight truncate">{r.name}</h3>
+          <p className="text-sm text-[#E8E2D4]/65 mt-1">Mulank {r.mulank} · {profile.title} · {profile.keywords}</p>
+        </div>
+        <button onClick={() => setResult(null)} className="astro-btn-ghost self-start md:self-auto shrink-0"><Pencil size={13} />Edit details</button>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <Medallion featured label="Mulank · Root" value={r.mulank} ruler={`${r.ruler} (${PLANETS[r.ruler].sanskrit})`} sub="Your personality & instincts" />
+        <Medallion label="Bhagyank · Destiny" value={r.bhagyank} ruler={`${r.destinyRuler} (${PLANETS[r.destinyRuler].sanskrit})`} sub={`Life path · compound ${r.bhagyankCompound}`} />
+        <Medallion label="Naamank · Name" value={r.naamank} ruler={r.naamank ? `${NUMBER_PLANET[r.naamank]}` : "Add a name"} sub={r.naamank ? `Chaldean compound ${r.naamCompound}` : ""} />
+      </div>
+
+      {/* Harmony */}
+      <div className="astro-panel p-5 sm:p-7">
+        <span className="astro-label">Number Harmony</span>
+        <div className="grid sm:grid-cols-3 gap-3 mt-4">
+          {[
+            ["Mulank ↔ Bhagyank", r.mulankBhagyank],
+            ["Name ↔ Mulank", r.nameHarmony?.withMulank],
+            ["Name ↔ Bhagyank", r.nameHarmony?.withBhagyank]
+          ].filter(([, v]) => v).map(([label, v]) => (
+            <div key={label} className="astro-card p-4 flex items-center justify-between gap-3">
+              <span className="text-sm text-[#F5EFE2]">{label}</span>
+              <span className={`text-[11px] px-2.5 py-0.5 rounded-full border ${HARMONY[v].cls}`}>{HARMONY[v].label}</span>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-[#E8E2D4]/65 mt-4 leading-relaxed">
+          Harmony follows the natural friendships of the ruling grahas.
+          {r.nameHarmony && (r.nameHarmony.withMulank === "challenging" || r.nameHarmony.withBhagyank === "challenging")
+            ? ` Your name number clashes with your birth numbers — a spelling adjustment towards ${r.luckyNumbers.join(", ")} is traditionally recommended.`
+            : " Your name supports your birth numbers — no spelling correction is needed."}
         </p>
       </div>
 
-      {!result ? (
-        <form onSubmit={calculateNumbers} className="bg-[#FDFBF7] border border-[#EFE8DC] rounded-2xl p-6 sm:p-8 max-w-xl mx-auto shadow-sm space-y-5">
-          <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#161514] mb-2">
-              Full Legal Name <span className="text-[#A85838]">*</span>
-            </label>
-            <input
-              type="text"
-              required
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              placeholder="e.g. Ananya Rajesh Patel"
-              className="w-full px-4 py-3 bg-[#F7F3EB] border border-[#D8CEBE] rounded-xl text-sm text-[#161514] focus:outline-none focus:border-[#B89758] transition-colors"
-            />
-            <p className="text-[11px] text-[#634832]/70 mt-1">Used to compute your Destiny (Expression) & Soul Urge vibration.</p>
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#161514] mb-2">
-              Date of Birth <span className="text-[#A85838]">*</span>
-            </label>
-            <input
-              type="date"
-              required
-              value={birthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
-              className="w-full px-4 py-3 bg-[#F7F3EB] border border-[#D8CEBE] rounded-xl text-sm text-[#161514] focus:outline-none focus:border-[#B89758] transition-colors"
-            />
-            <p className="text-[11px] text-[#634832]/70 mt-1">Calculates your core Life Path frequency.</p>
-          </div>
-
-          <div className="pt-2">
-            <button
-              type="submit"
-              disabled={isCalculating}
-              className="w-full py-3.5 px-6 bg-[#161514] text-[#FDFBF7] rounded-xl font-medium text-sm flex items-center justify-center gap-2 hover:bg-[#634832] transition-colors shadow-sm disabled:opacity-50"
-            >
-              <Sparkles size={16} className="text-[#B89758]" />
-              <span>{isCalculating ? "Calculating Frequencies..." : "Calculate My Spatial Numbers"}</span>
-            </button>
-          </div>
-
-          <p className="text-[10px] text-center text-[#634832]/60 pt-2">
-            * Interactive frontend calculation based on classical Pythagorean numerology.
-          </p>
-        </form>
-      ) : (
-        <div className="space-y-8 animate-in fade-in zoom-in-95 duration-400">
-          
-          {/* Numbers Summary Triad */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            
-            {/* Life Path Card */}
-            <div className="p-6 rounded-2xl bg-[#161514] text-[#FDFBF7] text-center border border-[#B89758]/30 shadow-md relative overflow-hidden">
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-[#B89758]">Core Life Path</span>
-              <div className="font-serif text-6xl font-normal text-[#FDFBF7] my-2 text-gold-glow">
-                {result.lifePath}
-              </div>
-              <p className="text-xs font-serif text-[#DEC695]">{result.archetype.title}</p>
-            </div>
-
-            {/* Destiny Number */}
-            <div className="p-6 rounded-2xl bg-[#FDFBF7] border border-[#EFE8DC] text-center">
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-[#634832]">Destiny Number</span>
-              <div className="font-serif text-5xl font-normal text-[#161514] my-2">
-                {result.destiny}
-              </div>
-              <p className="text-xs text-[#634832]">Expression & Life Purpose</p>
-            </div>
-
-            {/* Soul Urge Number */}
-            <div className="p-6 rounded-2xl bg-[#FDFBF7] border border-[#EFE8DC] text-center">
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-[#634832]">Soul Urge Number</span>
-              <div className="font-serif text-5xl font-normal text-[#A85838] my-2">
-                {result.soulUrge}
-              </div>
-              <p className="text-xs text-[#634832]">Inner Craving & Sanctuary</p>
-            </div>
-
-          </div>
-
-          {/* Archetype & Interior Translation */}
-          <div className="bg-[#FDFBF7] border border-[#EFE8DC] rounded-2xl p-6 sm:p-8 space-y-6">
-            <div className="border-b border-[#EFE8DC] pb-4 flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <span className="editorial-subheading text-[#B89758]">Spatial Alignment Archetype</span>
-                <h4 className="font-serif text-2xl sm:text-3xl text-[#161514] mt-1">
-                  Number {result.lifePath} — {result.archetype.title}
-                </h4>
-                <p className="text-xs text-[#634832] mt-0.5">
-                  Ruler: <strong className="text-[#161514]">{result.archetype.ruler}</strong> • Element: <strong className="text-[#161514]">{result.archetype.element}</strong>
-                </p>
-              </div>
-
-              <button
-                onClick={handleReset}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#634832] border border-[#D8CEBE] rounded-lg hover:bg-[#F7F3EB] transition-colors"
-              >
-                <RotateCcw size={13} />
-                <span>Calculate Another</span>
-              </button>
-            </div>
-
-            {/* Spatial Affinity Description */}
-            <div className="p-4 rounded-xl bg-[#F7F3EB]/80 border border-[#EFE8DC]">
-              <div className="flex items-center gap-2 mb-2 text-xs font-semibold uppercase tracking-wider text-[#A85838]">
-                <Home size={15} />
-                <span>How Your Space Should Be Designed</span>
-              </div>
-              <p className="text-xs sm:text-sm text-[#22201E] leading-relaxed">
-                {result.archetype.spatialTraits}
-              </p>
-            </div>
-
-            {/* Color & Material Recommendations */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-              <div className="p-3.5 rounded-xl border border-[#D8CEBE] bg-white">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#634832] block mb-1">
-                  Resonant Color Palette
-                </span>
-                <div className="flex flex-wrap gap-1.5 mt-2">
-                  {result.archetype.colors.map((c, idx) => (
-                    <span key={idx} className="text-xs px-2.5 py-0.5 rounded-md bg-[#F7F3EB] border border-[#EFE8DC] text-[#161514] font-medium">
-                      {c}
-                    </span>
-                  ))}
+      <div className="grid lg:grid-cols-12 gap-6">
+        {/* Lo Shu grid */}
+        <div className="lg:col-span-6 astro-panel p-5 sm:p-7">
+          <span className="astro-label">Lo Shu Grid · Vastu Mapping</span>
+          <div className="grid grid-cols-3 gap-2 mt-4 max-w-sm mx-auto">
+            {LO_SHU_LAYOUT.flat().map((n) => {
+              const count = r.loShu.counts[n];
+              return (
+                <div key={n} className={`aspect-square rounded-xl border flex flex-col items-center justify-center ${count ? "border-[#DEC695]/50 bg-[#DEC695]/10" : "border-dashed border-white/15"}`}>
+                  <span className={`font-serif text-2xl sm:text-3xl leading-none ${count ? "text-[#F5EFE2]" : "text-[#E8E2D4]/20"}`}>
+                    {count ? String(n).repeat(Math.min(count, 4)) : n}
+                  </span>
+                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#DEC695]/70 mt-1">{LO_SHU_DIRECTION[n] === "C" ? "Centre" : LO_SHU_DIRECTION[n]}</span>
                 </div>
-              </div>
-
-              <div className="p-3.5 rounded-xl border border-[#D8CEBE] bg-white">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#634832] block mb-1">
-                  Tactile Materials to Surround Yourself With
-                </span>
-                <p className="text-xs text-[#161514] mt-2 font-medium">
-                  {result.archetype.materials}
-                </p>
-              </div>
-            </div>
-
-            {/* Next Step Action */}
-            <div className="pt-4 border-t border-[#EFE8DC] flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-xs text-[#634832]">
-                Take this deeper with a complete personal Life Path & Vastu interior consultation.
-              </p>
-              <a
-                href={getWhatsAppLink(`Hello, my Life Path Number is ${result.lifePath} (${result.archetype.title}). I would like to consult on designing my home aligned with my numerology.`)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#161514] text-[#FDFBF7] rounded-xl text-xs font-medium hover:bg-[#634832] transition-colors shadow-sm"
-              >
-                <MessageCircle size={15} className="text-[#25D366]" />
-                <span>Discuss Number {result.lifePath} Home Consultation</span>
-              </a>
-            </div>
-
+              );
+            })}
           </div>
+          <p className="text-[10.5px] text-[#E8E2D4]/45 mt-3 text-center">
+            Includes birth digits + Bhagyank{r.loShu.extras.length > 1 ? ", Mulank" : ""}{r.kua ? " + Kua" : ""}. South at top, as in the traditional Lo Shu.
+          </p>
+          {r.loShu.planes.length > 0 && (
+            <div className="mt-5">
+              <span className="text-[10px] uppercase tracking-wider text-[#E8E2D4]/50">Completed planes</span>
+              <ul className="mt-2 space-y-1.5">
+                {r.loShu.planes.map((p) => (
+                  <li key={p.name} className="text-xs text-[#E8E2D4]/75"><strong className="text-[#DEC695]">{p.name}</strong> — {p.text}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
 
+        <div className="lg:col-span-6 astro-panel p-5 sm:p-7">
+          <span className="astro-label">Missing numbers → Vastu remedies</span>
+          {r.loShu.missing.length ? (
+            <ul className="mt-4 space-y-3">
+              {r.loShu.missing.map((n) => (
+                <li key={n} className="astro-card p-3.5 flex gap-3">
+                  <span className="w-9 h-9 shrink-0 rounded-lg border border-[#F0A58A]/40 text-[#F0A58A] font-serif text-xl flex items-center justify-center">{n}</span>
+                  <p className="text-xs text-[#E8E2D4]/75 leading-relaxed">{MISSING_REMEDY[n]}</p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-[#E8E2D4]/70 mt-4">A complete grid — every number is present. Rare and well balanced.</p>
+          )}
+        </div>
+      </div>
+
+      {/* Kua */}
+      {r.kua && (
+        <div className="astro-panel p-5 sm:p-7">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <span className="astro-label">Kua Number {r.kua}</span>
+              <h4 className="font-serif text-2xl text-[#F5EFE2]">{[1, 3, 4, 9].includes(r.kua) ? "East" : "West"} group directions</h4>
+            </div>
+            <p className="text-xs text-[#E8E2D4]/55 max-w-sm">Point your bed headboard to the Health direction and face the Success direction while working.</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
+            {KUA_DIRECTIONS[r.kua].good.map((d, i) => (
+              <div key={d} className={`${i === 0 ? "astro-card-glow" : "astro-card"} p-4`}>
+                <span className="text-[10px] uppercase tracking-wider text-[#E8E2D4]/55">{KUA_LABELS[i]}</span>
+                <p className="font-serif text-xl text-[#F5EFE2] mt-1">{DIRECTION_NAMES[d]}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-[#E8E2D4]/55 mt-4">
+            Directions to avoid facing: <span className="text-[#F0A58A]">{KUA_DIRECTIONS[r.kua].bad.map((d) => DIRECTION_NAMES[d]).join(" · ")}</span>
+          </p>
         </div>
       )}
+
+      {/* Space profile */}
+      <div className="grid lg:grid-cols-12 gap-6">
+        <div className="lg:col-span-7 astro-panel p-5 sm:p-7">
+          <span className="astro-label flex items-center gap-1.5"><Home size={12} />Your space · Mulank {r.mulank}</span>
+          <h4 className="font-serif text-2xl text-[#F5EFE2] mt-1">{profile.title}'s home</h4>
+          <p className="text-sm text-[#E8E2D4]/75 mt-3 leading-relaxed">{profile.spatial}</p>
+          <p className="text-xs text-[#E8E2D4]/60 mt-3"><strong className="text-[#F5EFE2]">Materials:</strong> {profile.materials}</p>
+          {planet.direction && (
+            <p className="text-xs text-[#E8E2D4]/60 mt-2">
+              <strong className="text-[#F5EFE2]">Activate the {DIRECTION_NAMES[planet.direction]}:</strong> {planet.interior}
+            </p>
+          )}
+        </div>
+        <div className="lg:col-span-5 space-y-6">
+          <div className="astro-panel p-5 sm:p-7">
+            <span className="astro-label flex items-center gap-1.5"><Gem size={12} />Lucky for you</span>
+            <dl className="mt-3 space-y-2 text-xs">
+              {[
+                ["Numbers", r.luckyNumbers.join(", ")],
+                ["Colours", planet.color],
+                ["Day", planet.day],
+                ["Gemstone", planet.gem]
+              ].map(([t, v]) => (
+                <div key={t} className="flex justify-between gap-3">
+                  <dt className="text-[#E8E2D4]/55">{t}</dt>
+                  <dd className="text-[#F5EFE2] text-right">{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+          <div className="astro-panel p-5 sm:p-7">
+            <span className="astro-label flex items-center gap-1.5"><CalendarClock size={12} />Personal year {new Date().getFullYear()}</span>
+            <p className="font-serif text-4xl text-gold-gradient mt-1">{r.personalYear}</p>
+            <p className="text-xs text-[#E8E2D4]/70 mt-1">{PERSONAL_YEAR_THEME[r.personalYear]}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="astro-panel p-5 sm:p-7 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <p className="text-sm text-[#E8E2D4]/75 max-w-xl flex items-start gap-2">
+          <Info size={15} className="text-[#DEC695] shrink-0 mt-0.5" />
+          Name corrections, business-name and house-number analysis are part of a full numerology consultation.
+        </p>
+        <a
+          href={getWhatsAppLink(`Hello! My Mulank is ${r.mulank}, Bhagyank ${r.bhagyank} and Name number ${r.naamank ?? "-"}. I'd like a numerology & home consultation.`)}
+          target="_blank" rel="noopener noreferrer" className="astro-btn w-full md:w-auto shrink-0"
+        >
+          <MessageCircle size={16} />Discuss my numbers
+        </a>
+      </div>
     </div>
   );
 }

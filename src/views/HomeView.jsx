@@ -180,7 +180,7 @@ export default function HomeView({ onNavigate }) {
           Where Energy Meets Design
           ═══════════════════════════════════════════════════════ */}
       <section
-        className="relative min-h-[92vh] flex items-center overflow-hidden"
+        className="relative min-h-hero flex items-center overflow-hidden"
         style={{
           background: 'linear-gradient(145deg, #070A14 0%, #0D1326 35%, #121524 70%, #161514 100%)'
         }}

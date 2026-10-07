@@ -49,7 +49,7 @@ const palettes = [
     mood: "Sacred, noble, handcrafted",
     description: "Antique unlacquered brass, deep Burma teak, raw hand-spun silk, and Makrana marble white.",
     hexCodes: ["#B89758", "#5A3825", "#FDFBF7", "#8E4426"],
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?auto=format&fit=crop&w=1200&q=80",
     vastuElement: "Solar Fire & Sacred Ether",
     bestFor: "Pooja Sanctuaries, Dining Galleries, Entrance Foyers"
   }

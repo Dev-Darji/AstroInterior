@@ -63,6 +63,12 @@
   line-height: 1.25;
 }
 
+/* ── Full-screen hero (svh avoids jumps from mobile browser toolbars) ── */
+.min-h-hero {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
 /* ── Editorial Utilities ── */
 .editorial-subheading {
   font-family: var(--font-sans);
@@ -149,6 +155,144 @@
   0%, 100% { opacity: 0.3; }
   50% { opacity: 0.8; }
 }
+
+/* ── Celestial Observatory (Tools) — layered so utilities can override ── */
+@layer components {
+  .astro-page {
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(94, 84, 178, 0.35), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 100% 40%, rgba(184, 151, 88, 0.08), transparent 70%),
+      linear-gradient(180deg, #0d0d24 0%, #0a0a1f 55%, #07071a 100%);
+    color: #E8E2D4;
+  }
+
+  .astro-starfield {
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(243, 226, 184, 0.9), transparent),
+      radial-gradient(1px 1px at 72% 8%, rgba(243, 226, 184, 0.7), transparent),
+      radial-gradient(1.5px 1.5px at 38% 62%, rgba(243, 226, 184, 0.6), transparent),
+      radial-gradient(1px 1px at 88% 44%, rgba(255, 255, 255, 0.7), transparent),
+      radial-gradient(1px 1px at 55% 30%, rgba(255, 255, 255, 0.5), transparent),
+      radial-gradient(1.5px 1.5px at 22% 84%, rgba(243, 226, 184, 0.5), transparent),
+      radial-gradient(1px 1px at 94% 92%, rgba(255, 255, 255, 0.6), transparent),
+      radial-gradient(1px 1px at 4% 52%, rgba(255, 255, 255, 0.5), transparent);
+    background-size: 420px 420px;
+    animation: star-twinkle 6s ease-in-out infinite;
+  }
+
+  .astro-panel {
+    /* Solid base keeps the panel deep navy even when embedded on ivory pages */
+    background: linear-gradient(180deg, rgba(30, 30, 72, 0.55) 0%, rgba(13, 13, 36, 0.8) 100%), #0d0d24;
+    border: 1px solid rgba(222, 198, 149, 0.18);
+    border-radius: 1.5rem;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 40px 80px -40px rgba(0, 0, 0, 0.7);
+  }
+
+  .astro-card {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(222, 198, 149, 0.14);
+    border-radius: 1rem;
+  }
+
+  .astro-card-glow {
+    background: radial-gradient(ellipse at top, rgba(222, 198, 149, 0.14), rgba(255, 255, 255, 0.02) 70%);
+    border: 1px solid rgba(222, 198, 149, 0.35);
+    border-radius: 1rem;
+    box-shadow: 0 0 40px -12px rgba(222, 198, 149, 0.35);
+  }
+
+  .astro-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #DEC695;
+  }
+
+  .astro-input {
+    width: 100%;
+    background: rgba(7, 7, 26, 0.65);
+    border: 1px solid rgba(222, 198, 149, 0.22);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: #F5EFE2;
+    font-size: 16px; /* prevents iOS zoom on focus */
+    color-scheme: dark;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .astro-input::placeholder { color: rgba(232, 226, 212, 0.35); }
+  .astro-input:focus {
+    outline: none;
+    border-color: #DEC695;
+    box-shadow: 0 0 0 3px rgba(222, 198, 149, 0.15);
+  }
+
+  .astro-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.5rem;
+    border-radius: 0.85rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #161514;
+    background: linear-gradient(135deg, #F3E2B8 0%, #DEC695 45%, #B89758 100%);
+    box-shadow: 0 10px 30px -10px rgba(222, 198, 149, 0.55);
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  }
+  .astro-btn:hover { transform: translateY(-1px); box-shadow: 0 14px 36px -10px rgba(222, 198, 149, 0.7); }
+  .astro-btn:disabled { opacity: 0.55; transform: none; cursor: not-allowed; }
+
+  .astro-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #E8E2D4;
+    border: 1px solid rgba(222, 198, 149, 0.28);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .astro-btn-ghost:hover { background: rgba(222, 198, 149, 0.1); border-color: #DEC695; }
+
+  .astro-chip {
+    border: 1px solid rgba(222, 198, 149, 0.22);
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(232, 226, 212, 0.8);
+    border-radius: 0.75rem;
+    transition: all 0.2s;
+  }
+  .astro-chip:hover { border-color: rgba(222, 198, 149, 0.6); color: #F5EFE2; }
+  .astro-chip[data-active="true"] {
+    border-color: #DEC695;
+    background: linear-gradient(135deg, rgba(222, 198, 149, 0.22), rgba(184, 151, 88, 0.12));
+    color: #F5EFE2;
+    box-shadow: 0 0 24px -8px rgba(222, 198, 149, 0.5);
+  }
+
+  .text-gold-gradient {
+    background: linear-gradient(100deg, #F3E2B8 0%, #DEC695 45%, #B89758 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}
+
+@keyframes astro-fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+.astro-fade-in { animation: astro-fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
 /* ── Custom Scrollbar ── */
 ::-webkit-scrollbar {

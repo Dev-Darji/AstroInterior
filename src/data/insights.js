@@ -5,7 +5,7 @@ export const insights = [
     category: "Vastu × Interior Design",
     readTime: "5 min read",
     date: "October 2025",
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?auto=format&fit=crop&w=1200&q=80",
     excerpt: "How contemporary residences are replacing heavy, ornate mandirs with minimalist backlit marble jaalis, fluted glass, and peaceful Ishanya (NE) orientation.",
     keyTakeaway: "A sacred space does not require visual heaviness; it requires clarity, pure materials, and morning daylight."
   },

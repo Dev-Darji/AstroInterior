@@ -10,7 +10,8 @@ export const projects = [
     year: "2025",
     style: "Contemporary Indian Minimal",
     heroImage: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85",
-    beforeImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
+    beforeImage: "/images/before/earth-light-before.jpg",
+    beforeCredit: { author: "Matt Bango", license: "CC0", url: "https://stocksnap.io/photo/room-window-T3QP4DRXS2" },
     afterImage: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85",
     beforeDesc: "A stark, poorly lit 1990s apartment with awkward column placements and heavy partition walls obstructing natural cross-ventilation.",
     afterDesc: "An open, flowing sanctuary bathed in diffused daylight, featuring warm lime wash, teak woodwork, and travertine finishes aligned with Vastu axes.",
@@ -47,7 +48,7 @@ export const projects = [
       },
       {
         title: "Pooja & Contemplation Corner (Ishanya)",
-        url: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+        url: "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?auto=format&fit=crop&w=1200&q=85",
         caption: "Backlit Makrana white marble jaali providing a sacred focal point without visual bulk."
       }
     ]
@@ -63,7 +64,8 @@ export const projects = [
     year: "2024",
     style: "Warm Luxury & Natural Stone",
     heroImage: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=85",
-    beforeImage: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
+    beforeImage: "/images/before/sky-pavilion-before.jpg",
+    beforeCredit: { author: "PattayaPatrol", license: "CC BY-SA 2.0", url: "https://www.flickr.com/photos/194424926@N05/54249811860" },
     afterImage: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85",
     beforeDesc: "Cold grey developer shell with double-height echo and unshielded harsh afternoon western heat.",
     afterDesc: "A warm, acoustically dampened double-height living room with acoustic fluted oak battens and curated Vastu spatial flow.",
@@ -104,7 +106,8 @@ export const projects = [
     year: "2025",
     style: "Japandi × Contemporary Indian",
     heroImage: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1600&q=85",
-    beforeImage: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80",
+    beforeImage: "/images/before/coastal-serenity-before.jpg",
+    beforeCredit: { author: "USDA", license: "Public Domain", url: "https://www.flickr.com/photos/41284017@N08/51850006599" },
     afterImage: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85",
     beforeDesc: "Cramped metropolitan apartment with heavy dark veneer furniture making the compact space feel claustrophobic.",
     afterDesc: "A continuous micro-cement floor paired with light ash wood, concealed storage, and Japanese shoji-inspired sliding screens.",
@@ -140,7 +143,8 @@ export const projects = [
     year: "2024",
     style: "Biophilic & Earth Architecture",
     heroImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=85",
-    beforeImage: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80",
+    beforeImage: "/images/before/prana-studio-before.jpg",
+    beforeCredit: { author: "jjes84", license: "CC BY 2.0", url: "https://www.flickr.com/photos/37779177@N03/52219930937" },
     afterImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=85",
     beforeDesc: "A generic commercial cubicle grid with artificial tube lighting and zero plant life.",
     afterDesc: "An invigorating courtyard workplace with indoor trees, skylights, terracotta floor tiles, and collaborative pods.",

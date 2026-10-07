@@ -19,7 +19,7 @@ export const materials = [
     texture: "Open Grain, Natural Oil Satin Finish",
     tone: "Deep Honey Amber to Warm Chestnut",
     description: "The gold standard of Indian craftsmanship. Naturally termite-resistant, aromatic, and imparting warmth and grounding energy.",
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
     styles: ["Heritage Contemporary", "Modern Indian", "Japandi"],
     bestFor: "Pooja room altars, dining tables, architectural door frames"
   },

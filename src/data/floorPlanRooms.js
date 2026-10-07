@@ -2,8 +2,8 @@ export const floorPlanRooms = [
   {
     id: "entrance",
     name: "Main Entrance (Foyer)",
-    zone: "North / East Corridor",
-    directionCode: "NE",
+    zone: "East (Indra) or North-East",
+    directionCode: "E",
     image: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=80",
     vastuRules: [
       "The entrance is the primary mouth of prana (vital life force). Must be brightly lit and welcoming.",
@@ -21,8 +21,8 @@ export const floorPlanRooms = [
   {
     id: "living",
     name: "Great Living Room",
-    zone: "North-East to East Zone",
-    directionCode: "E",
+    zone: "North (Kubera) or East",
+    directionCode: "N",
     image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80",
     vastuRules: [
       "Keep the central zone (Brahmasthan) open with low-height coffee tables.",
@@ -42,7 +42,7 @@ export const floorPlanRooms = [
     name: "Pooja & Meditation Room",
     zone: "North-East (Ishanya)",
     directionCode: "NE",
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?auto=format&fit=crop&w=1200&q=80",
     vastuRules: [
       "The most auspicious zone for spiritual communion and high vibrational resonance.",
       "Idols raised on a marble or wood pedestal slightly away from direct wall contact.",

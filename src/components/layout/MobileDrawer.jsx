@@ -11,6 +11,7 @@ export default function MobileDrawer({ isOpen, onClose, currentTab, onNavigate }
     { id: "astrology", label: "Astrology", icon: Sparkles },
     { id: "vastu", label: "Vastu", icon: Compass },
     { id: "numerology", label: "Numerology", icon: Layers },
+    { id: "tools", label: "Kundli & Astro Tools", icon: Sparkles },
     { id: "interiors", label: "Interiors", icon: Home },
     { id: "about", label: "About", icon: BookOpen },
     { id: "contact", label: "Contact", icon: Phone }

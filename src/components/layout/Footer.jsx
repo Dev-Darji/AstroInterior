@@ -18,7 +18,7 @@ export default function Footer({ onNavigate }) {
             </p>
 
             <p className="text-sm text-[#D8CEBE]/80 leading-relaxed max-w-md">
-              A contemporary Indian design practice bridging Vedic Astrology, Pythagorean Numerology, 
+              A contemporary Indian design practice bridging Vedic Astrology, Chaldean Numerology, 
               Vastu Shastra, and bespoke modern interior architecture. We align living spaces with the people who inhabit them.
             </p>
 
@@ -93,13 +93,13 @@ export default function Footer({ onNavigate }) {
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate("tools")} className="hover:text-[#FDFBF7] transition-colors">
+                <button onClick={() => onNavigate("tools", "kundli")} className="hover:text-[#FDFBF7] transition-colors">
                   Vedic Kundli Analysis
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate("tools")} className="hover:text-[#FDFBF7] transition-colors">
-                  Pythagorean Numerology
+                <button onClick={() => onNavigate("tools", "numerology")} className="hover:text-[#FDFBF7] transition-colors">
+                  Chaldean Numerology
                 </button>
               </li>
             </ul>
@@ -110,27 +110,27 @@ export default function Footer({ onNavigate }) {
             <h3 className="font-serif text-lg text-[#FDFBF7] tracking-wide">Interactive</h3>
             <ul className="space-y-2.5 text-sm text-[#D8CEBE]/70">
               <li>
-                <button onClick={() => onNavigate("vastu")} className="hover:text-[#FDFBF7] transition-colors">
+                <button onClick={() => onNavigate("tools", "compass")} className="hover:text-[#FDFBF7] transition-colors">
                   8-Direction Vastu Compass
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate("vastu-interiors")} className="hover:text-[#FDFBF7] transition-colors">
+                <button onClick={() => onNavigate("tools", "floorplan")} className="hover:text-[#FDFBF7] transition-colors">
                   Room-by-Room Floor Plan
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate("tools")} className="hover:text-[#FDFBF7] transition-colors">
-                  Life Path Calculator
+                <button onClick={() => onNavigate("tools", "kundli")} className="hover:text-[#FDFBF7] transition-colors">
+                  Free Kundli Generator
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate("tools")} className="hover:text-[#FDFBF7] transition-colors">
-                  AI Space Advisor Demo
+                <button onClick={() => onNavigate("tools", "advisor")} className="hover:text-[#FDFBF7] transition-colors">
+                  Space Concept Advisor
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate("interiors")} className="hover:text-[#FDFBF7] transition-colors">
+                <button onClick={() => onNavigate("tools", "slider")} className="hover:text-[#FDFBF7] transition-colors">
                   Before / After Slider
                 </button>
               </li>

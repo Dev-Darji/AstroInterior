@@ -22,19 +22,24 @@ export default function Navbar({ activeTab, onNavigate }) {
     { id: "astrology", label: "Astrology" },
     { id: "vastu", label: "Vastu" },
     { id: "numerology", label: "Numerology" },
+    { id: "tools", label: "Tools" },
     { id: "interiors", label: "Interiors" },
     { id: "about", label: "About" },
     { id: "contact", label: "Contact" }
   ];
 
-  const isDarkHero = !isScrolled && activeTab === "home";
+  const isDarkPage = ["tools", "numerology", "kundli"].includes(activeTab);
+  // Light-on-dark styling over the home hero and across the celestial tools pages
+  const isDarkHero = (!isScrolled && activeTab === "home") || isDarkPage;
 
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? "bg-[#FDFBF7]/95 backdrop-blur-md shadow-sm border-b border-[#EFE8DC] py-3.5"
+            ? isDarkPage
+              ? "bg-[#0a0a1f]/90 backdrop-blur-md shadow-sm border-b border-[#DEC695]/15 py-3.5"
+              : "bg-[#FDFBF7]/95 backdrop-blur-md shadow-sm border-b border-[#EFE8DC] py-3.5"
             : "bg-transparent py-5"
         }`}
       >
@@ -52,7 +57,7 @@ export default function Navbar({ activeTab, onNavigate }) {
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
               {navItems.map((item) => {
-                const isActive = activeTab === item.id;
+                const isActive = activeTab === item.id || (item.id === "tools" && activeTab === "kundli");
                 return (
                   <button
                     key={item.id}

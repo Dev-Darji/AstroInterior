@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Compass, CheckCircle2, AlertTriangle, Sparkles, MessageCircle, ChevronRight, Layers } from 'lucide-react';
+import { Compass, CheckCircle2, AlertTriangle, Sparkles, MessageCircle, Palette } from 'lucide-react';
 import { vastuDirections } from '../../data/vastuDirections';
 import { getWhatsAppLink } from '../../data/siteConfig';
+
+const C = 150;
 
 export default function VastuCompass({ onSelectDirection }) {
   const [selectedCode, setSelectedCode] = useState("NE");
@@ -13,195 +15,135 @@ export default function VastuCompass({ onSelectDirection }) {
   };
 
   return (
-    <div className="bg-[#F7F3EB] border border-[#EFE8DC] rounded-3xl p-6 md:p-10 shadow-sm">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-        
-        {/* Left Column: Visual Compass SVG */}
-        <div className="lg:col-span-6 flex flex-col items-center justify-center">
-          <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 flex items-center justify-center">
-            {/* Outer decorative ring (Static & Architectural) */}
-            <div className="absolute inset-0 rounded-full border border-[#D8CEBE] border-dashed"></div>
-            <div className="absolute inset-3 rounded-full border border-[#B89758]/25"></div>
-            
-            {/* Compass Base SVG */}
-            <svg viewBox="0 0 300 300" className="w-full h-full transform transition-transform duration-500" aria-label="Interactive 8-Direction Vastu Compass">
-              {/* Concentric circles */}
-              <circle cx="150" cy="150" r="135" fill="none" stroke="#E0D3C1" strokeWidth="1" />
-              <circle cx="150" cy="150" r="110" fill="none" stroke="#D8CEBE" strokeWidth="1" strokeDasharray="3 3" />
-              <circle cx="150" cy="150" r="45" fill="#FDFBF7" stroke="#B89758" strokeWidth="1.5" />
+    <div className="astro-panel relative overflow-hidden p-5 sm:p-8 md:p-10 text-[#E8E2D4]">
+      <div className="absolute inset-0 astro-starfield opacity-50 pointer-events-none" aria-hidden="true" />
+      <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
-              {/* Cardinal axis crosshairs */}
-              <line x1="150" y1="18" x2="150" y2="282" stroke="#D8CEBE" strokeWidth="1" />
-              <line x1="18" y1="150" x2="282" y2="150" stroke="#D8CEBE" strokeWidth="1" />
-              <line x1="56" y1="56" x2="244" y2="244" stroke="#EFE8DC" strokeWidth="1" />
-              <line x1="56" y1="244" x2="244" y2="56" stroke="#EFE8DC" strokeWidth="1" />
-
-              {/* 8 Direction Markers */}
-              {vastuDirections.map((dir) => {
-                // Calculate position on circumference
-                const rad = ((dir.angle - 90) * Math.PI) / 180;
-                const x = 150 + 95 * Math.cos(rad);
-                const y = 150 + 95 * Math.sin(rad);
-                const isSelected = selectedCode === dir.code;
-
+        {/* Compass */}
+        <div className="lg:col-span-6 flex flex-col items-center">
+          <div className="w-full max-w-[340px] aspect-square">
+            <svg viewBox="0 0 300 300" className="w-full h-full" role="group" aria-label="Interactive 8-direction Vastu compass">
+              <defs>
+                <radialGradient id="vc-core" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#DEC695" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="#DEC695" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              <circle cx={C} cy={C} r="140" fill="none" stroke="#DEC695" strokeWidth="0.8" opacity="0.4" />
+              <circle cx={C} cy={C} r="125" fill="none" stroke="#DEC695" strokeWidth="0.5" strokeDasharray="2 4" opacity="0.4" />
+              {Array.from({ length: 72 }, (_, i) => {
+                const a = (i * 5 - 90) * (Math.PI / 180);
+                const len = i % 9 === 0 ? 10 : 4;
                 return (
-                  <g 
-                    key={dir.code} 
-                    className="cursor-pointer transition-all group focus:outline-none"
+                  <line key={i} x1={C + 140 * Math.cos(a)} y1={C + 140 * Math.sin(a)} x2={C + (140 - len) * Math.cos(a)} y2={C + (140 - len) * Math.sin(a)}
+                    stroke="#DEC695" strokeWidth="0.6" opacity="0.5" />
+                );
+              })}
+              <line x1={C} y1="30" x2={C} y2="270" stroke="#DEC695" strokeWidth="0.5" opacity="0.25" />
+              <line x1="30" y1={C} x2="270" y2={C} stroke="#DEC695" strokeWidth="0.5" opacity="0.25" />
+
+              {/* Needle points at the selected direction */}
+              <g style={{ transform: `rotate(${selected.angle}deg)`, transformOrigin: "150px 150px", transition: "transform 0.6s cubic-bezier(0.16,1,0.3,1)" }}>
+                <polygon points={`${C},62 ${C + 7},${C} ${C},${C + 10} ${C - 7},${C}`} fill="#DEC695" opacity="0.9" />
+                <polygon points={`${C},${C + 10} ${C + 7},${C} ${C},${C + 60} ${C - 7},${C}`} fill="#DEC695" opacity="0.2" />
+              </g>
+              <circle cx={C} cy={C} r="48" fill="url(#vc-core)" />
+              <circle cx={C} cy={C} r="30" fill="#0d0d24" stroke="#DEC695" strokeWidth="1" />
+              <text x={C} y={C - 2} textAnchor="middle" fontSize="7.5" fontWeight="700" letterSpacing="1.5" fill="#DEC695">BRAHMA</text>
+              <text x={C} y={C + 9} textAnchor="middle" fontSize="7" letterSpacing="1" fill="#E8E2D4" opacity="0.7">STHAN</text>
+
+              {vastuDirections.map((dir) => {
+                const rad = ((dir.angle - 90) * Math.PI) / 180;
+                const x = C + 100 * Math.cos(rad);
+                const y = C + 100 * Math.sin(rad);
+                const active = selectedCode === dir.code;
+                return (
+                  <g
+                    key={dir.code}
+                    className="cursor-pointer focus:outline-none"
                     tabIndex={0}
                     role="button"
-                    aria-label={`${dir.name} - ${dir.sanskrit} direction`}
-                    aria-pressed={isSelected}
+                    aria-label={`${dir.name} — ${dir.sanskrit}`}
+                    aria-pressed={active}
                     onClick={() => handleSelect(dir.code)}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
+                      if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();
                         handleSelect(dir.code);
                       }
                     }}
                   >
-                    {/* Direction Node */}
-                    <circle
-                      cx={x}
-                      cy={y}
-                      r={isSelected ? "20" : "16"}
-                      fill={isSelected ? "#161514" : "#FDFBF7"}
-                      stroke={isSelected ? "#B89758" : "#D8CEBE"}
-                      strokeWidth={isSelected ? "2.5" : "1.5"}
-                      className="transition-all duration-200 group-hover:scale-110"
-                    />
-                    <text
-                      x={x}
-                      y={y + 4}
-                      textAnchor="middle"
-                      fontSize={isSelected ? "11" : "9.5"}
-                      fontWeight="600"
-                      fill={isSelected ? "#FDFBF7" : "#22201E"}
-                      className="select-none pointer-events-none transition-colors"
-                    >
+                    <circle cx={x} cy={y} r={active ? 19 : 15} fill={active ? "#DEC695" : "#141430"} stroke="#DEC695" strokeWidth={active ? 2 : 1} strokeOpacity={active ? 1 : 0.5} style={{ transition: "all 0.25s" }} />
+                    <text x={x} y={y + 3.5} textAnchor="middle" fontSize={active ? 11 : 10} fontWeight="700" fill={active ? "#161514" : "#F5EFE2"} className="pointer-events-none select-none">
                       {dir.code}
                     </text>
                   </g>
                 );
               })}
-
-              {/* Center Brahmasthan Label */}
-              <text x="150" y="146" textAnchor="middle" fontSize="9" fontWeight="700" fill="#B89758" letterSpacing="1">
-                BRAHMA
-              </text>
-              <text x="150" y="158" textAnchor="middle" fontSize="7.5" fill="#634832" letterSpacing="0.5">
-                STHAN
-              </text>
             </svg>
-
-            {/* Subtle pointer needle */}
-            <div 
-              className="absolute pointer-events-none w-1 h-28 sm:h-32 bg-gradient-to-t from-transparent via-[#A85838]/40 to-[#A85838] rounded-full transition-transform duration-500 origin-bottom"
-              style={{ transform: `rotate(${selected.angle}deg)`, bottom: '50%' }}
-            />
           </div>
 
-          {/* Quick Direction Selector Pills */}
-          <div className="flex flex-wrap justify-center gap-2 mt-6 max-w-sm">
+          <div className="grid grid-cols-4 gap-2 mt-6 w-full max-w-sm">
             {vastuDirections.map((dir) => (
-              <button
-                key={dir.code}
-                onClick={() => handleSelect(dir.code)}
-                className={`px-3 py-1 text-xs rounded-full border transition-all ${
-                  selectedCode === dir.code
-                    ? "bg-[#161514] text-[#FDFBF7] border-[#161514] font-semibold shadow-sm"
-                    : "bg-[#FDFBF7] text-[#634832] border-[#D8CEBE] hover:border-[#B89758]"
-                }`}
-              >
-                {dir.code} • {dir.sanskrit}
+              <button key={dir.code} data-active={selectedCode === dir.code} onClick={() => handleSelect(dir.code)} className="astro-chip py-1.5 text-[11px] leading-tight">
+                <span className="block font-semibold">{dir.code}</span>
+                <span className="block opacity-70 truncate px-1">{dir.sanskrit}</span>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Right Column: Directional Insight Card */}
-        <div className="lg:col-span-6 bg-[#FDFBF7] border border-[#EFE8DC] rounded-2xl p-6 sm:p-8 shadow-sm">
-          {/* Header */}
-          <div className="flex items-start justify-between border-b border-[#EFE8DC] pb-4 mb-5">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="editorial-subheading text-[#B89758]">
-                  {selected.code} Cardinal Orientation
-                </span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-[#EFE8DC] text-[#634832] font-medium">
-                  {selected.element}
-                </span>
+        {/* Insight card */}
+        <div key={selected.code} className="lg:col-span-6 astro-card p-5 sm:p-7 astro-fade-in">
+          <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4 mb-5">
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="astro-label">{selected.code} · Dik</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-full border border-[#DEC695]/30 text-[#DEC695]">{selected.element}</span>
               </div>
-              <h3 className="font-serif text-3xl text-[#161514] mt-1 font-normal">
-                {selected.name} <span className="text-[#A85838] italic font-light">({selected.sanskrit})</span>
+              <h3 className="font-serif text-3xl text-[#F5EFE2] mt-1">
+                {selected.name} <span className="italic text-[#DEC695] font-light">({selected.sanskrit})</span>
               </h3>
-              <p className="text-xs text-[#634832] mt-0.5">
-                Governed by: <strong className="text-[#161514]">{selected.ruler}</strong>
-              </p>
+              <p className="text-xs text-[#E8E2D4]/60 mt-0.5">Governed by {selected.ruler}</p>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-[#F7F3EB] border border-[#D8CEBE] flex items-center justify-center text-[#B89758]">
-              <Compass size={24} />
-            </div>
+            <span className="w-11 h-11 shrink-0 rounded-xl border border-[#DEC695]/30 flex items-center justify-center text-[#DEC695]">
+              <Compass size={22} />
+            </span>
           </div>
 
-          {/* Core Meaning */}
-          <div className="mb-5 p-3.5 rounded-xl bg-[#F7F3EB]/70 border border-[#EFE8DC] text-xs leading-relaxed text-[#161514]">
-            <p className="font-medium text-[#A85838] mb-0.5 uppercase tracking-wider text-[10px]">Zone Significance</p>
-            <p className="text-sm font-light text-[#22201E]">{selected.zoneMeaning}</p>
-          </div>
+          <p className="text-sm text-[#F5EFE2]/90 leading-relaxed mb-5">{selected.zoneMeaning}</p>
 
-          {/* Auspicious Placement */}
-          <div className="mb-5 space-y-2">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-[#161514] flex items-center gap-1.5">
-              <CheckCircle2 size={14} className="text-[#607261]" />
-              <span>Recommended Placements</span>
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {selected.idealFor.map((item, idx) => (
-                <span key={idx} className="text-xs px-3 py-1 rounded-md bg-[#607261]/10 text-[#404c41] font-medium border border-[#607261]/20">
-                  {item}
-                </span>
+          <div className="mb-5">
+            <h4 className="astro-label mb-2 flex items-center gap-1.5"><CheckCircle2 size={12} />Best placed here</h4>
+            <div className="flex flex-wrap gap-1.5">
+              {selected.idealFor.map((item) => (
+                <span key={item} className="text-[11px] px-2.5 py-1 rounded-md border border-[#9FD6A8]/30 bg-[#9FD6A8]/10 text-[#CFEBD3]">{item}</span>
               ))}
             </div>
           </div>
 
-          {/* Interior Design Recommendation */}
-          <div className="mb-5 space-y-1.5">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-[#161514] flex items-center gap-1.5">
-              <Sparkles size={14} className="text-[#B89758]" />
-              <span>Interior Architecture Solution</span>
-            </h4>
-            <p className="text-xs leading-relaxed text-[#634832]">
-              {selected.interiorAdvice}
+          <div className="mb-5 space-y-2">
+            <h4 className="astro-label flex items-center gap-1.5"><Sparkles size={12} />Interior solution</h4>
+            <p className="text-xs text-[#E8E2D4]/75 leading-relaxed">{selected.interiorAdvice}</p>
+            <p className="text-[11px] text-[#E8E2D4]/60"><strong className="text-[#F5EFE2]">Materials:</strong> {selected.materials.join(", ")}</p>
+            <p className="text-[11px] text-[#E8E2D4]/60 flex items-start gap-1.5">
+              <Palette size={12} className="text-[#DEC695] shrink-0 mt-0.5" />
+              <span><strong className="text-[#F5EFE2]">Colours:</strong> {selected.colors.join(", ")}</span>
             </p>
-            <div className="pt-1 text-[11px] text-[#634832]/80">
-              <strong className="text-[#161514]">Harmonious Materials:</strong> {selected.materials.join(", ")}
-            </div>
           </div>
 
-          {/* Things to Avoid */}
-          <div className="mb-6 p-3 rounded-lg bg-[#A85838]/5 border border-[#A85838]/20 flex items-start gap-2.5">
-            <AlertTriangle size={15} className="text-[#A85838] shrink-0 mt-0.5" />
-            <div className="text-xs text-[#634832]">
-              <span className="font-semibold text-[#A85838]">Avoid Here: </span>
-              {selected.avoid.join(" • ")}
-            </div>
+          <div className="mb-6 p-3 rounded-lg border border-[#F0A58A]/30 bg-[#F0A58A]/5 flex items-start gap-2.5">
+            <AlertTriangle size={15} className="text-[#F0A58A] shrink-0 mt-0.5" />
+            <p className="text-xs text-[#E8E2D4]/75"><span className="font-semibold text-[#F0A58A]">Avoid: </span>{selected.avoid.join(" · ")}</p>
           </div>
 
-          {/* Action CTA */}
-          <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
-            <a
-              href={getWhatsAppLink(`Hello, I would like to consult on the ${selected.name} (${selected.sanskrit}) orientation of my home.`)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#161514] text-[#FDFBF7] rounded-xl text-xs font-medium hover:bg-[#634832] transition-colors"
-            >
-              <MessageCircle size={15} className="text-[#25D366]" />
-              <span>Ask About My {selected.name} Direction</span>
-            </a>
-          </div>
+          <a
+            href={getWhatsAppLink(`Hello, I would like to consult on the ${selected.name} (${selected.sanskrit}) zone of my home.`)}
+            target="_blank" rel="noopener noreferrer" className="astro-btn w-full"
+          >
+            <MessageCircle size={16} />Ask about my {selected.name} zone
+          </a>
         </div>
-
       </div>
     </div>
   );

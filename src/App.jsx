@@ -15,27 +15,33 @@ import InsightsView from './views/InsightsView';
 import ConsultationView from './views/ConsultationView';
 import ContactView from './views/ContactView';
 
-export default function App() {
-  const [activeTab, setActiveTab] = useState("home");
+// Hash routes such as #tools/kundli keep views linkable and the back button working
+const parseHash = () => {
+  const [tab, sub] = window.location.hash.replace(/^#\/?/, "").split("/");
+  return { tab: tab || "home", sub: sub || null };
+};
 
-  const handleNavigate = (tabId) => {
-    setActiveTab(tabId);
+export default function App() {
+  const [route, setRoute] = useState(() => ({ ...parseHash(), nonce: 0 }));
+  const activeTab = route.tab;
+
+  const handleNavigate = (tabId, sub = null) => {
+    setRoute((r) => ({ tab: tabId, sub, nonce: r.nonce + 1 }));
+    window.history.pushState(null, "", `#${tabId}${sub ? `/${sub}` : ""}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Sync with browser history popstate if back/forward button clicked
   useEffect(() => {
-    const handlePopState = (e) => {
-      if (e.state && e.state.tab) {
-        setActiveTab(e.state.tab);
-      }
-    };
+    const handlePopState = () => setRoute((r) => ({ ...parseHash(), nonce: r.nonce + 1 }));
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  const isToolsTab = activeTab === "tools" || activeTab === "numerology" || activeTab === "kundli";
+  const initialTool = activeTab === "tools" ? route.sub || "kundli" : activeTab;
+
   return (
-    <div className="min-h-screen flex flex-col bg-[#FDFBF7] text-[#22201E] relative selection:bg-[#B89758]/25 selection:text-[#161514]">
+    <div className={`min-h-screen flex flex-col ${isToolsTab ? "bg-[#07071a]" : "bg-[#FDFBF7]"} text-[#22201E] relative selection:bg-[#B89758]/25 selection:text-[#161514]`}>
       {/* Primary Sticky Header */}
       <Navbar activeTab={activeTab} onNavigate={handleNavigate} />
 
@@ -46,7 +52,13 @@ export default function App() {
         {activeTab === "vastu" && <VastuView onNavigate={handleNavigate} />}
         {activeTab === "interiors" && <InteriorsView onNavigate={handleNavigate} />}
         {(activeTab === "services" || activeTab === "astrology") && <ServicesView onNavigate={handleNavigate} />}
-        {(activeTab === "tools" || activeTab === "numerology") && <ToolsView />}
+        {isToolsTab && (
+          <ToolsView
+            key={route.nonce}
+            initialTool={initialTool}
+            onToolChange={(id) => window.history.replaceState(null, "", `#tools/${id}`)}
+          />
+        )}
         {activeTab === "insights" && <InsightsView onNavigate={handleNavigate} />}
         {activeTab === "consultation" && <ConsultationView />}
         {activeTab === "contact" && <ContactView onNavigate={handleNavigate} />}
