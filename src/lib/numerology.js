@@ -188,7 +188,7 @@ export function computeNumerology({ name, dob, kuaFormula, now = new Date() }) {
     naamank: naam.value,
     naamCompound: naam.compound,
     kua,
-    loShu: { counts, missing, planes, extras },
+    loShu: { counts, missing, planes, extras, includesMulank: d > 9 },
     personalYear,
     ruler,
     destinyRuler: NUMBER_PLANET[bhagyank],

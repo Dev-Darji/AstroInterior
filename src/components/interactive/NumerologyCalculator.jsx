@@ -1,18 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { Sparkles, MessageCircle, Pencil, Home, Compass, Info, User, Calendar, CalendarClock, Gem } from 'lucide-react';
+import { Sparkles, MessageCircle, Pencil, Home, Compass, Info, User, Calendar, Gem } from 'lucide-react';
 import { getWhatsAppLink } from '../../data/siteConfig';
 import { PLANETS, DIRECTION_NAMES } from '../../lib/astroData';
 import {
   computeNumerology, NUMBER_PROFILE, NUMBER_PLANET, LO_SHU_LAYOUT, LO_SHU_DIRECTION,
-  MISSING_REMEDY, PERSONAL_YEAR_THEME, KUA_DIRECTIONS, KUA_LABELS
+  MISSING_REMEDY, KUA_DIRECTIONS, KUA_LABELS
 } from '../../lib/numerology';
-
-const HARMONY = {
-  excellent: { label: "Excellent", cls: "text-[#9FD6A8] border-[#9FD6A8]/40 bg-[#9FD6A8]/10" },
-  good: { label: "Supportive", cls: "text-[#DEC695] border-[#DEC695]/40 bg-[#DEC695]/10" },
-  neutral: { label: "Neutral", cls: "text-[#E8E2D4]/80 border-white/15 bg-white/5" },
-  challenging: { label: "Challenging", cls: "text-[#F0A58A] border-[#F0A58A]/40 bg-[#F0A58A]/10" }
-};
 
 function Medallion({ label, value, sub, ruler, featured }) {
   return (
@@ -114,30 +107,7 @@ export default function NumerologyCalculator() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Medallion featured label="Mulank · Root" value={r.mulank} ruler={`${r.ruler} (${PLANETS[r.ruler].sanskrit})`} sub="Your personality & instincts" />
         <Medallion label="Bhagyank · Destiny" value={r.bhagyank} ruler={`${r.destinyRuler} (${PLANETS[r.destinyRuler].sanskrit})`} sub={`Life path · compound ${r.bhagyankCompound}`} />
-        <Medallion label="Naamank · Name" value={r.naamank} ruler={r.naamank ? `${NUMBER_PLANET[r.naamank]}` : "Add a name"} sub={r.naamank ? `Chaldean compound ${r.naamCompound}` : ""} />
-      </div>
-
-      {/* Harmony */}
-      <div className="astro-panel p-5 sm:p-7">
-        <span className="astro-label">Number Harmony</span>
-        <div className="grid sm:grid-cols-3 gap-3 mt-4">
-          {[
-            ["Mulank ↔ Bhagyank", r.mulankBhagyank],
-            ["Name ↔ Mulank", r.nameHarmony?.withMulank],
-            ["Name ↔ Bhagyank", r.nameHarmony?.withBhagyank]
-          ].filter(([, v]) => v).map(([label, v]) => (
-            <div key={label} className="astro-card p-4 flex items-center justify-between gap-3">
-              <span className="text-sm text-[#F5EFE2]">{label}</span>
-              <span className={`text-[11px] px-2.5 py-0.5 rounded-full border ${HARMONY[v].cls}`}>{HARMONY[v].label}</span>
-            </div>
-          ))}
-        </div>
-        <p className="text-xs text-[#E8E2D4]/65 mt-4 leading-relaxed">
-          Harmony follows the natural friendships of the ruling grahas.
-          {r.nameHarmony && (r.nameHarmony.withMulank === "challenging" || r.nameHarmony.withBhagyank === "challenging")
-            ? ` Your name number clashes with your birth numbers — a spelling adjustment towards ${r.luckyNumbers.join(", ")} is traditionally recommended.`
-            : " Your name supports your birth numbers — no spelling correction is needed."}
-        </p>
+        <Medallion label="Naamank · Name" value={r.naamank} ruler={r.naamank ? `${NUMBER_PLANET[r.naamank]}` : "Name not readable"} sub={r.naamank ? "Your name's vibration" : "Type your name in English letters"} />
       </div>
 
       <div className="grid lg:grid-cols-12 gap-6">
@@ -158,18 +128,8 @@ export default function NumerologyCalculator() {
             })}
           </div>
           <p className="text-[10.5px] text-[#E8E2D4]/45 mt-3 text-center">
-            Includes birth digits + Bhagyank{r.loShu.extras.length > 1 ? ", Mulank" : ""}{r.kua ? " + Kua" : ""}. South at top, as in the traditional Lo Shu.
+            Includes birth digits + Bhagyank{r.loShu.includesMulank ? ", Mulank" : ""}{r.kua ? " + Kua" : ""}. South at top, as in the traditional Lo Shu.
           </p>
-          {r.loShu.planes.length > 0 && (
-            <div className="mt-5">
-              <span className="text-[10px] uppercase tracking-wider text-[#E8E2D4]/50">Completed planes</span>
-              <ul className="mt-2 space-y-1.5">
-                {r.loShu.planes.map((p) => (
-                  <li key={p.name} className="text-xs text-[#E8E2D4]/75"><strong className="text-[#DEC695]">{p.name}</strong> — {p.text}</li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
 
         <div className="lg:col-span-6 astro-panel p-5 sm:p-7">
@@ -226,7 +186,7 @@ export default function NumerologyCalculator() {
             </p>
           )}
         </div>
-        <div className="lg:col-span-5 space-y-6">
+        <div className="lg:col-span-5">
           <div className="astro-panel p-5 sm:p-7">
             <span className="astro-label flex items-center gap-1.5"><Gem size={12} />Lucky for you</span>
             <dl className="mt-3 space-y-2 text-xs">
@@ -242,11 +202,6 @@ export default function NumerologyCalculator() {
                 </div>
               ))}
             </dl>
-          </div>
-          <div className="astro-panel p-5 sm:p-7">
-            <span className="astro-label flex items-center gap-1.5"><CalendarClock size={12} />Personal year {new Date().getFullYear()}</span>
-            <p className="font-serif text-4xl text-gold-gradient mt-1">{r.personalYear}</p>
-            <p className="text-xs text-[#E8E2D4]/70 mt-1">{PERSONAL_YEAR_THEME[r.personalYear]}</p>
           </div>
         </div>
       </div>

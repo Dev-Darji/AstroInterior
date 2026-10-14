@@ -1,5 +1,6 @@
 import {
-  Body, MakeTime, GeoVector, Ecliptic, EclipticGeoMoon, SunPosition, SiderealTime, e_tilt
+  Body, MakeTime, GeoVector, Ecliptic, EclipticGeoMoon, SunPosition, SiderealTime, e_tilt,
+  Observer, SearchRiseSet
 } from 'astronomy-engine';
 import {
   SIGNS, PLANETS, PLANET_ORDER, NAKSHATRAS, DASHA_SEQUENCE, DASHA_YEARS,
@@ -215,7 +216,7 @@ export function computeKundli({ date, latitude, longitude, utcOffsetMinutes, now
       tithi: `${paksha} ${tithiName}`,
       paksha,
       yoga: NITYA_YOGAS[Math.floor(norm360(sunLon + moonLon) / NAK_SPAN)],
-      vaar: VAARS[localWeekday(date, utcOffsetMinutes ?? (longitude / 15) * 60)],
+      vaar: VAARS[vedicWeekday(date, latitude, longitude, utcOffsetMinutes ?? (longitude / 15) * 60)],
       nakshatra: planets.Moon.nakshatra
     },
     manglik: {
@@ -230,9 +231,15 @@ export function computeKundli({ date, latitude, longitude, utcOffsetMinutes, now
   };
 }
 
-// Civil weekday at the birth place (falls back to local mean time when no zone offset is known)
-function localWeekday(date, offsetMinutes) {
-  return new Date(date.getTime() + offsetMinutes * 60000).getUTCDay();
+// Vedic vaar runs sunrise to sunrise: a birth before local sunrise belongs to the previous weekday.
+// Falls back to the civil weekday where the Sun doesn't rise that day (polar regions).
+function vedicWeekday(date, latitude, longitude, offsetMinutes) {
+  const offsetMs = offsetMinutes * 60000;
+  const local = new Date(date.getTime() + offsetMs);
+  const day = local.getUTCDay();
+  const midnight = Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate()) - offsetMs;
+  const sunrise = SearchRiseSet(Body.Sun, new Observer(latitude, longitude, 0), +1, MakeTime(new Date(midnight)), 1);
+  return sunrise && date < sunrise.date ? (day + 6) % 7 : day;
 }
 
 // Sign elements across Lagna + seven visible grahas (nodes excluded as shadow planets)
