@@ -1,8 +1,8 @@
 import React from 'react';
 import SectionHeader from '../components/ui/SectionHeader';
-import { serviceCategories, astrologyServices, numerologyServices, vastuServices } from '../data/services';
-import { Sparkles, Compass, CheckCircle2, ArrowRight, MessageCircle, Calendar } from 'lucide-react';
-import { getWhatsAppLink } from '../data/siteConfig';
+import { serviceCategories, astrologyServices, serviceCatalogue } from '../data/services';
+import { CheckCircle2, ArrowRight, MessageCircle } from 'lucide-react';
+import { getWhatsAppLink, siteConfig } from '../data/siteConfig';
 
 export default function ServicesView({ onNavigate }) {
   return (
@@ -16,7 +16,7 @@ export default function ServicesView({ onNavigate }) {
           <span className="italic text-[#A85838]">Self, Space & Design.</span>
         </h1>
         <p className="text-base sm:text-lg text-[#634832] font-light leading-relaxed">
-          From full turnkey interior architecture in Ahmedabad and Surat to remote Vedic Kundli and 16-zone Vastu audits across India and worldwide.
+          {siteConfig.experience} of experience in Vastu, Astrology, Vedic Numerology and Interior Design — on-site across Mumbai and online across India and worldwide.
         </p>
 
         <div className="pt-2 flex justify-center gap-4">
@@ -88,6 +88,41 @@ export default function ServicesView({ onNavigate }) {
           </div>
         ))}
       </div>
+
+      {/* Complete service catalogue */}
+      <section className="space-y-8">
+        <SectionHeader
+          eyebrow="Complete Services"
+          title="Everything We Offer"
+          subtitle={`Every consultation is handled personally by ${siteConfig.founderName}.`}
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {serviceCatalogue.map((group) => (
+            <div key={group.id} className="p-6 rounded-2xl bg-[#FDFBF7] border border-[#EFE8DC] flex flex-col justify-between gap-5">
+              <div>
+                <h3 className="font-serif text-2xl text-[#161514]">{group.title}</h3>
+                <ul className="mt-3 space-y-1.5 text-xs text-[#22201E]">
+                  {group.items.map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <CheckCircle2 size={13} className="text-[#B89758] shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <a
+                href={getWhatsAppLink(`Hello ${siteConfig.founderName}, I would like to enquire about ${group.title}.`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#161514] hover:text-[#A85838]"
+              >
+                <MessageCircle size={14} className="text-[#25D366]" />
+                <span>Enquire on WhatsApp</span>
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Astrology & Numerology Deep Dive */}
       <section className="bg-[#F7F3EB] border border-[#EFE8DC] rounded-3xl p-6 sm:p-10 space-y-8">

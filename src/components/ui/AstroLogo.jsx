@@ -95,7 +95,7 @@ export default function AstroLogo({ light = false, size = "default", className =
               light ? "text-[#D8CEBE]" : "text-[#634832]"
             }`}
           >
-            Astrology • Vastu • Architecture
+            by Jinisha Parmar
           </span>
         )}
       </div>

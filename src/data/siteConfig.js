@@ -1,30 +1,36 @@
 export const siteConfig = {
   brandName: "AstroInterior",
+  founderName: "Jinisha Parmar",
+  founderTitle: "Vastu Consultant · Astrologer · Numerologist · Interior Designer",
+  experience: "10+ Years",
   tagline: "Where Energy Meets Design",
+  cardTagline: "Creating harmonious spaces for a happy, successful and prosperous life",
   subtitle: "Understand yourself. Understand your space. Design a place that feels right.",
-  phone: "+91 98765 43210",
-  phoneDisplay: "+91 98765 43210",
-  whatsappNumber: "919876543210", // International format without +
-  email: "hello@astrointerior.in",
-  consultationEmail: "consult@astrointerior.in",
-  address: "Studio 402, Signature One, Bodakdev, SG Highway",
-  city: "Ahmedabad",
-  state: "Gujarat",
-  pincode: "380054",
+  phone: "+919769238325",
+  phoneDisplay: "+91 97692 38325",
+  phoneAlt: "+917900161377",
+  phoneAltDisplay: "+91 79001 61377",
+  whatsappNumber: "919769238325", // International format without + (confirm with client which number is on WhatsApp)
+  email: "parmarjinisha31@gmail.com",
+  address: "Shop No. 4, Atlanta Apartments, Opp. Assumption Church, Dahanukarwadi, Kandivali West",
+  city: "Mumbai",
+  state: "Maharashtra",
+  pincode: "400067",
   country: "India",
-  workingHours: "Monday – Saturday: 10:00 AM – 7:30 PM IST",
+  mapsLink: "https://www.google.com/maps/search/?api=1&query=Atlanta+Apartments+Opp+Assumption+Church+Dahanukarwadi+Kandivali+West+Mumbai",
+  workingHours: "Consultations by appointment",
   socialLinks: {
-    instagram: "https://instagram.com",
-    pinterest: "https://pinterest.com",
-    youtube: "https://youtube.com",
-    linkedin: "https://linkedin.com",
+    instagram: "https://www.instagram.com/astro.jinishaparmar/",
   },
-  citiesServed: ["Ahmedabad", "Surat", "Vadodara", "Mumbai", "Pune", "Bengaluru", "Delhi NCR"],
+  instagramHandle: "astro.jinishaparmar",
+  citiesServed: ["Mumbai", "Thane", "Navi Mumbai"],
   disclaimer: "Astrology, Numerology, and Vastu consultations provide holistic guidance and spatial balance. They complement architectural planning and personal mindfulness, and are designed for intentional living."
 };
 
+export const fullAddress = `${siteConfig.address}, ${siteConfig.city} ${siteConfig.pincode}`;
+
 export const getWhatsAppLink = (customText) => {
-  const defaultText = `Hello ${siteConfig.brandName}, I would like to enquire about your design and consultation services.`;
+  const defaultText = `Hello ${siteConfig.founderName}, I would like to enquire about your Vastu, astrology and interior consultation services.`;
   const text = encodeURIComponent(customText || defaultText);
   return `https://wa.me/${siteConfig.whatsappNumber}?text=${text}`;
 };

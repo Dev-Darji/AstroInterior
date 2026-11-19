@@ -84,7 +84,7 @@ export default function PlaceSearch({ id, value, onChange }) {
           role="combobox"
           aria-expanded={open && results.length > 0}
           aria-controls={`${id}-list`}
-          placeholder="Start typing a city, e.g. Ahmedabad"
+          placeholder="Start typing a city, e.g. Mumbai"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);

@@ -22,13 +22,16 @@ export default function InteriorsView({ onNavigate }) {
       
       {/* Hero */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
-        <span className="editorial-subheading text-[#B89758]">Architectural Portfolio</span>
+        <span className="editorial-subheading text-[#B89758]">Interior Design</span>
         <h1 className="font-serif text-4xl sm:text-6xl text-[#161514] font-normal leading-tight">
           Spaces Designed Around <br />
           <span className="italic text-[#A85838]">The Way You Live.</span>
         </h1>
         <p className="text-base sm:text-lg text-[#634832] font-light leading-relaxed">
-          Contemporary Indian residences and boutique commercial studios celebrating tactile natural stone, honest timber joinery, diffused daylight, and Vastu-aligned flow.
+          Elegant, functional homes, offices and retail spaces — space planning, décor and styling with Vastu-aligned flow built in.
+        </p>
+        <p className="text-[11px] text-[#634832]/80">
+          The spaces below are illustrative design concepts. Photos of completed client projects are shared during consultation.
         </p>
 
         <div className="pt-2 flex justify-center gap-4">
@@ -109,11 +112,11 @@ export default function InteriorsView({ onNavigate }) {
                   className="text-xs font-semibold text-[#A85838] hover:text-[#161514] flex items-center gap-1.5"
                 >
                   <Eye size={14} />
-                  <span>Read Full Case Study</span>
+                  <span>View Concept Details</span>
                 </button>
 
                 <a
-                  href={getWhatsAppLink(`Hello! I saw your ${proj.title} project (${proj.location}) and would like to discuss a similar project for my home.`)}
+                  href={getWhatsAppLink(`Hello! I liked the "${proj.title}" design concept on your website and would like to discuss something similar for my space.`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 rounded-full bg-[#F7F3EB] hover:bg-[#EFE8DC] text-[#25D366] transition-colors"
@@ -141,12 +144,12 @@ export default function InteriorsView({ onNavigate }) {
 
             <div className="space-y-6">
               <div>
-                <span className="editorial-subheading text-[#B89758]">{activeModalProject.category} Case Study</span>
+                <span className="editorial-subheading text-[#B89758]">{activeModalProject.category} Design Concept</span>
                 <h2 className="font-serif text-3xl sm:text-4xl text-[#161514] mt-1 font-normal">
                   {activeModalProject.title}
                 </h2>
                 <p className="text-xs text-[#634832] mt-1">
-                  {activeModalProject.location} • {activeModalProject.scope} • Completed {activeModalProject.year}
+                  {activeModalProject.scope} • {activeModalProject.area}
                 </p>
               </div>
 
@@ -200,13 +203,13 @@ export default function InteriorsView({ onNavigate }) {
                   Inspired by this home? Let’s evaluate your property’s potential.
                 </p>
                 <a
-                  href={getWhatsAppLink(`Hello, I was reviewing your case study for ${activeModalProject.title} and want to discuss designing my home.`)}
+                  href={getWhatsAppLink(`Hello, I was looking at the "${activeModalProject.title}" design concept and want to discuss designing my space.`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-3 bg-[#161514] text-[#FDFBF7] rounded-xl text-xs font-semibold hover:bg-[#634832] transition-colors inline-flex items-center gap-2"
                 >
                   <MessageCircle size={15} className="text-[#25D366]" />
-                  <span>Discuss Project with Studio</span>
+                  <span>Discuss Your Project</span>
                 </a>
               </div>
             </div>
@@ -217,9 +220,9 @@ export default function InteriorsView({ onNavigate }) {
       {/* Draggable Before / After Section */}
       <section>
         <SectionHeader
-          eyebrow="Transformation Gallery"
+          eyebrow="Transformation Concepts"
           title="Interactive Before / After Comparisons"
-          subtitle="Drag the slider to examine how raw architectural shells evolve into calm sanctuaries."
+          subtitle="Drag the slider to see how a plain shell can evolve into a calm, Vastu-aligned space (illustrative)."
         />
         <BeforeAfterSlider />
       </section>
@@ -229,7 +232,7 @@ export default function InteriorsView({ onNavigate }) {
         <SectionHeader
           eyebrow="Physical Samples"
           title="Tactile Materiality & Finishes"
-          subtitle="Explore the hand-finished lime plasters, reclaimed Burma teaks, vein-cut travertines, and raw linens we source."
+          subtitle="Explore finishes such as lime plasters, teak, travertine and raw linens — and the Vastu zones each suits best."
         />
         <MaterialBoard />
       </section>

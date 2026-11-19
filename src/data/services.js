@@ -108,6 +108,73 @@ export const numerologyServices = [
   }
 ];
 
+// Full service catalogue as listed on Jinisha Parmar's visiting card
+export const serviceCatalogue = [
+  {
+    id: "vastu",
+    title: "Vastu",
+    items: [
+      "Residential, Commercial & Retail",
+      "Plot & Property Vastu Analysis",
+      "Remedies & Enhancements",
+      "Vastu for Renovation & New Construction",
+      "Vastu for Health, Wealth & Happiness",
+      "Office & Business Vastu",
+      "Land & Plot Vastu"
+    ]
+  },
+  {
+    id: "astrology",
+    title: "Astrology",
+    items: [
+      "Detailed Horoscope Analysis",
+      "Career, Marriage & Relationship Guidance",
+      "Muhurta & Event Selection",
+      "Dasha Analysis & Remedies",
+      "Vedic Astrology for Life Guidance"
+    ]
+  },
+  {
+    id: "numerology",
+    title: "Vedic Numerology",
+    items: [
+      "Name & Number Analysis",
+      "Life Path & Destiny Numbers",
+      "Personal Year Analysis",
+      "Numerology for Business & Brand Names",
+      "Remedies for Growth & Success"
+    ]
+  },
+  {
+    id: "interiors",
+    title: "Interior Design",
+    items: [
+      "Elegant & Functional Spaces",
+      "Residential | Commercial | Retail",
+      "Space Planning, Décor & Styling",
+      "Interior Design in Homes and Workspaces"
+    ]
+  },
+  {
+    id: "medical",
+    title: "Medical Vastu",
+    items: [
+      "Healing Energy Spaces",
+      "Vastu for Clinics, Hospitals & Wellness Centres"
+    ]
+  },
+  {
+    id: "other",
+    title: "Other Vastu Services",
+    items: [
+      "Office & Business Vastu",
+      "Industrial Vastu",
+      "Land & Plot Vastu",
+      "Vastu for Shops & Showrooms"
+    ]
+  }
+];
+
 export const vastuServices = [
   {
     id: "residential-audit",
@@ -121,7 +188,14 @@ export const vastuServices = [
     title: "Commercial & Office Vastu",
     type: "Enterprise Audit",
     description: "Directional alignment of owner cabins, cashier points, sales teams, and server rooms for heightened prosperity and focus.",
-    idealFor: "Corporate offices, retail outlets, creative studios, and healthcare clinics."
+    idealFor: "Corporate offices, shops & showrooms, retail outlets and industrial units."
+  },
+  {
+    id: "medical-vastu",
+    title: "Medical Vastu",
+    type: "Healthcare Spaces",
+    description: "Healing-energy planning for consultation rooms, OTs, wards, reception and pharmacy placement in clinics and hospitals.",
+    idealFor: "Clinics, hospitals, diagnostic centres and wellness studios."
   },
   {
     id: "plot-selection",

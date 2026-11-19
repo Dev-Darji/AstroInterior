@@ -26,7 +26,7 @@ export const faqGroups = [
         a: "Never. We believe true energy is effortless and beautiful. We integrate Vastu principles into contemporary Italian minimalism, Scandinavian-Japandi, or modern Indian aesthetics so seamlessly that guests experience peace without seeing ritualistic clutter."
       },
       {
-        q: "At what stage should I engage Self × Space × Design?",
+        q: "At what stage should I involve a Vastu consultant and interior designer?",
         a: "The ideal moment is before civil alterations or while purchasing a property. However, we also conduct audits and interior makeovers for occupied residences."
       }
     ]
@@ -51,11 +51,15 @@ export const faqGroups = [
     questions: [
       {
         q: "How do consultations work?",
-        a: "We offer both online video consultations (for clients across India and globally) and on-site visits in Ahmedabad, Surat, Mumbai, and surrounding cities. Every consultation begins with a structured review of your floor plan or birth details."
+        a: "You can meet Jinisha Parmar at the Kandivali West office, book an on-site visit for your home, office, shop or clinic in Mumbai, or take an online video consultation from anywhere in India or abroad. Every consultation begins with a structured review of your floor plan or birth details."
+      },
+      {
+        q: "Do you also do Vastu for clinics, offices and factories?",
+        a: "Yes. Alongside residential Vastu we offer Medical Vastu for clinics, hospitals and wellness centres, as well as Office & Business, Shop & Showroom, Industrial and Land & Plot Vastu."
       },
       {
         q: "Can I directly reach out via WhatsApp?",
-        a: "Yes! WhatsApp is our most direct communication channel. You can message our principal design studio anytime using the floating button or consultation forms."
+        a: "Yes! WhatsApp is the quickest way to reach us. Use the floating WhatsApp button or the consultation form — your details arrive pre-filled in the chat."
       }
     ]
   }

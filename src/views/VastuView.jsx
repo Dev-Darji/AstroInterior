@@ -93,10 +93,10 @@ export default function VastuView({ onNavigate }) {
         <SectionHeader
           eyebrow="Specialized Audits"
           title="Our Vastu Consultation Offerings"
-          subtitle="Tailored audits for residential apartments, corporate headquarters, and pre-purchase land evaluations."
+          subtitle="Tailored audits for homes, offices, shops, clinics and pre-purchase land evaluations."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {vastuServices.map((srv) => (
             <div
               key={srv.id}

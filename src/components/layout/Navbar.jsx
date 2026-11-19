@@ -89,7 +89,7 @@ export default function Navbar({ activeTab, onNavigate }) {
                     ? "bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/40 hover:bg-[#25D366]/30"
                     : "bg-[#25D366]/10 text-[#1a8a43] border border-[#25D366]/30 hover:bg-[#25D366]/20"
                 }`}
-                title="Chat with our principal studio on WhatsApp"
+                title="Chat on WhatsApp"
               >
                 <MessageCircle size={15} className="text-[#25D366]" />
                 <span>WhatsApp</span>

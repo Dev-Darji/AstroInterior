@@ -179,7 +179,7 @@ export default function BeforeAfterSlider({ dark = false }) {
           <p className={`text-xs leading-relaxed ${t.body}`}>{currentProject.beforeDesc}</p>
         </div>
         <div className={`p-4 ${t.card}`}>
-          <span className={`text-[10px] font-bold uppercase tracking-wider block mb-1 ${t.afterLabel}`}>Architectural & Vastu Intervention</span>
+          <span className={`text-[10px] font-bold uppercase tracking-wider block mb-1 ${t.afterLabel}`}>Design & Vastu Intervention</span>
           <p className={`text-xs leading-relaxed ${t.body}`}>{currentProject.afterDesc}</p>
         </div>
       </div>
@@ -190,7 +190,7 @@ export default function BeforeAfterSlider({ dark = false }) {
           <p className={`text-[11px] ${t.meta}`}>{currentProject.location} • {currentProject.scope}</p>
         </div>
         <a
-          href={getWhatsAppLink(`Hello! I saw your Before/After transformation of ${currentProject.title} (${currentProject.location}) and would like to explore a similar transformation for my home.`)}
+          href={getWhatsAppLink(`Hello! I saw the "${currentProject.title}" before/after concept on your website and would like to explore a similar transformation for my space.`)}
           target="_blank"
           rel="noopener noreferrer"
           className={t.cta}

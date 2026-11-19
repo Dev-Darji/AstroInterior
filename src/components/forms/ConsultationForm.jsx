@@ -21,19 +21,25 @@ export default function ConsultationForm({ defaultService = "Vastu × Interior D
 
   const services = [
     "Vastu × Interior Design",
-    "Complete Interior Architecture",
-    "Residential Vastu Audit",
-    "Commercial / Office Vastu",
-    "Vedic Kundli & Astrology",
-    "Numerology Blueprint"
+    "Residential Vastu",
+    "Commercial / Office / Shop Vastu",
+    "Medical Vastu (Clinic / Hospital)",
+    "Plot & Land Vastu",
+    "Interior Design",
+    "Astrology & Horoscope",
+    "Muhurta & Event Selection",
+    "Vedic Numerology"
   ];
 
   const propertyTypes = [
     "Apartment / High-Rise",
     "Duplex / Penthouse",
     "Independent Bungalow / Villa",
-    "Commercial Office / Studio",
-    "Raw Plot / Land"
+    "Office / Shop / Showroom",
+    "Clinic / Hospital",
+    "Factory / Industrial",
+    "Plot / Land",
+    "Not applicable (Astrology / Numerology)"
   ];
 
   const budgets = [
@@ -45,24 +51,26 @@ export default function ConsultationForm({ defaultService = "Vastu × Interior D
     "Not Sure / Custom"
   ];
 
+  const getCustomWhatsAppText = () => {
+    return `Hello ${siteConfig.founderName}, I would like to book a consultation.
+Service: ${formData.service}
+Name: ${formData.name}
+Phone: ${formData.phone}
+Email: ${formData.email || '-'}
+City: ${formData.city}
+Property: ${formData.propertyType}
+Budget: ${formData.budget}
+Preferred Contact: ${formData.preferredContact}
+Message: ${formData.message || '-'}`;
+  };
+
+  // No backend: the enquiry is delivered by opening WhatsApp with every detail pre-filled.
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 500);
-  };
-
-  const getCustomWhatsAppText = () => {
-    return `Hello ${siteConfig.brandName}, I have submitted a consultation request for ${formData.service}.
-Name: ${formData.name}
-City: ${formData.city}
-Property: ${formData.propertyType} (${formData.propertySize})
-Budget: ${formData.budget}
-Preferred Contact: ${formData.preferredContact}
-Message: ${formData.message || 'None'}`;
+    window.open(getWhatsAppLink(getCustomWhatsAppText()), "_blank", "noopener,noreferrer");
+    setIsSubmitting(false);
+    setIsSubmitted(true);
   };
 
   return (
@@ -72,10 +80,11 @@ Message: ${formData.message || 'None'}`;
           <div className="border-b border-[#EFE8DC] pb-5">
             <span className="editorial-subheading text-[#B89758]">Initiate Dialogue</span>
             <h3 className="font-serif text-3xl text-[#161514] mt-1 font-normal">
-              Request an Architectural & Vastu Consultation
+              Request a Consultation with {siteConfig.founderName}
             </h3>
             <p className="text-xs sm:text-sm text-[#634832] mt-1 leading-relaxed">
-              Every inquiry is reviewed directly by our principal studio. Please provide basic details about your project or consultation focus.
+              Every enquiry is reviewed personally. Fill in a few details — pressing the button opens WhatsApp with your
+              request ready to send.
             </p>
           </div>
 
@@ -128,7 +137,7 @@ Message: ${formData.message || 'None'}`;
                 inputMode="tel"
                 required
                 autoComplete="tel"
-                placeholder="+91 98765 43210"
+                placeholder="+91 XXXXX XXXXX"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 className="w-full px-4 py-3 bg-[#F7F3EB] border border-[#D8CEBE] rounded-xl text-sm text-[#161514] focus:outline-none focus:ring-2 focus:ring-[#B89758]/40 focus:border-[#B89758] transition-all"
@@ -159,7 +168,7 @@ Message: ${formData.message || 'None'}`;
               <input
                 type="text"
                 required
-                placeholder="e.g. Ahmedabad, Surat, Mumbai"
+                placeholder="e.g. Kandivali, Borivali, Thane"
                 value={formData.city}
                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                 className="w-full px-4 py-3 bg-[#F7F3EB] border border-[#D8CEBE] rounded-xl text-sm text-[#161514] focus:outline-none focus:ring-2 focus:ring-[#B89758]/40 focus:border-[#B89758] transition-all"
@@ -245,7 +254,7 @@ Message: ${formData.message || 'None'}`;
               className="w-full py-4 px-6 bg-[#161514] text-[#FDFBF7] rounded-xl font-medium text-sm flex items-center justify-center gap-2 hover:bg-[#634832] transition-colors shadow-md disabled:opacity-50"
             >
               <Send size={16} className="text-[#DEC695]" />
-              <span>{isSubmitting ? "Transmitting Request..." : "Request Consultation"}</span>
+              <span>{isSubmitting ? "Opening WhatsApp..." : "Send Request via WhatsApp"}</span>
             </button>
           </div>
 
@@ -269,12 +278,13 @@ Message: ${formData.message || 'None'}`;
           </div>
 
           <div>
-            <span className="editorial-subheading text-[#B89758]">Consultation Received</span>
+            <span className="editorial-subheading text-[#B89758]">Almost Done</span>
             <h3 className="font-serif text-3xl text-[#161514] mt-1">
               Thank You, {formData.name}
             </h3>
             <p className="text-sm text-[#634832] max-w-md mx-auto mt-2 leading-relaxed">
-              We have received your enquiry for <strong>{formData.service}</strong> in {formData.city}. Our studio team will reach out via {formData.preferredContact} within 24 hours.
+              Your enquiry for <strong>{formData.service}</strong> is ready in WhatsApp — just press <strong>Send</strong> there.
+              If WhatsApp didn't open, use the button below or call {siteConfig.phoneDisplay}.
             </p>
           </div>
 
@@ -287,7 +297,7 @@ Message: ${formData.message || 'None'}`;
               className="w-full flex items-center justify-center gap-2 py-3 px-5 bg-[#25D366] text-white rounded-xl text-sm font-semibold hover:bg-[#22bf5b] transition-colors shadow-md"
             >
               <MessageCircle size={18} />
-              <span>Forward Request to Studio WhatsApp</span>
+              <span>Open WhatsApp Again</span>
             </a>
 
             <button

@@ -303,7 +303,7 @@ export default function AISpaceAdvisor() {
             href={getWhatsAppLink(`Hello! I created a concept "${c.title}" for my ${c.room.name}${c.direction ? ` (${DIRECTION_NAMES[c.direction]} zone)` : ""} in ${c.style.name}, budget ${c.budget.label}. I'd like to discuss it.`)}
             target="_blank" rel="noopener noreferrer" className="astro-btn w-full md:w-auto mt-0 md:mt-4"
           >
-            <MessageCircle size={16} />Share with the studio
+            <MessageCircle size={16} />Share on WhatsApp
           </a>
         </div>
       </div>

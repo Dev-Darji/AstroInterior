@@ -86,7 +86,7 @@ export default function FAQAccordion() {
           className="inline-flex items-center gap-2 px-4 py-2 bg-[#161514] text-[#FDFBF7] rounded-xl text-xs font-medium hover:bg-[#634832] transition-colors"
         >
           <MessageCircle size={14} className="text-[#25D366]" />
-          <span>Ask Studio via WhatsApp</span>
+          <span>Ask via WhatsApp</span>
         </a>
       </div>
     </div>

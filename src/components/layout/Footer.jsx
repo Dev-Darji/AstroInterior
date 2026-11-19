@@ -1,6 +1,14 @@
 import React from 'react';
 import { MessageCircle, Phone, Mail, MapPin, ArrowUpRight } from 'lucide-react';
-import { siteConfig, getWhatsAppLink } from '../../data/siteConfig';
+
+const Instagram = ({ size = 16, className = "" }) => (
+  <svg width={size} height={size} className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8" aria-hidden="true">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+  </svg>
+);
+import { siteConfig, getWhatsAppLink, fullAddress } from '../../data/siteConfig';
 import AstroLogo from '../ui/AstroLogo';
 
 export default function Footer({ onNavigate }) {
@@ -18,8 +26,9 @@ export default function Footer({ onNavigate }) {
             </p>
 
             <p className="text-sm text-[#D8CEBE]/80 leading-relaxed max-w-md">
-              A contemporary Indian design practice bridging Vedic Astrology, Chaldean Numerology, 
-              Vastu Shastra, and bespoke modern interior architecture. We align living spaces with the people who inhabit them.
+              Led by {siteConfig.founderName} — {siteConfig.experience.toLowerCase()} of experience in Vastu, Astrology,
+              Numerology and Interior Design. Holistic solutions that bring balance, positivity and growth to your home,
+              work and life.
             </p>
 
             <div className="pt-2 flex items-center gap-4 text-[#D8CEBE]">
@@ -30,38 +39,9 @@ export default function Footer({ onNavigate }) {
                 className="p-2.5 rounded-full bg-[#22201E] hover:text-[#B89758] hover:bg-[#2B2825] transition-colors"
                 aria-label="Instagram"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
+                <Instagram size={16} />
               </a>
-              <a 
-                href={siteConfig.socialLinks.youtube} 
-                target="_blank" 
-                rel="noreferrer" 
-                className="p-2.5 rounded-full bg-[#22201E] hover:text-[#B89758] hover:bg-[#2B2825] transition-colors"
-                aria-label="YouTube"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8">
-                  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
-                  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"></polygon>
-                </svg>
-              </a>
-              <a 
-                href={siteConfig.socialLinks.linkedin} 
-                target="_blank" 
-                rel="noreferrer" 
-                className="p-2.5 rounded-full bg-[#22201E] hover:text-[#B89758] hover:bg-[#2B2825] transition-colors"
-                aria-label="LinkedIn"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                  <rect x="2" y="9" width="4" height="12"></rect>
-                  <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-              </a>
-              <a 
+              <a
                 href={getWhatsAppLink("Hello, I am reaching out from your website footer.")}
                 target="_blank" 
                 rel="noreferrer" 
@@ -99,7 +79,7 @@ export default function Footer({ onNavigate }) {
               </li>
               <li>
                 <button onClick={() => onNavigate("tools", "numerology")} className="hover:text-[#FDFBF7] transition-colors">
-                  Chaldean Numerology
+                  Vedic Numerology
                 </button>
               </li>
             </ul>
@@ -139,16 +119,25 @@ export default function Footer({ onNavigate }) {
 
           {/* Col 5: Studio Details */}
           <div className="space-y-4">
-            <h3 className="font-serif text-lg text-[#FDFBF7] tracking-wide">Studio</h3>
+            <h3 className="font-serif text-lg text-[#FDFBF7] tracking-wide">Contact</h3>
             <div className="space-y-3 text-xs text-[#D8CEBE]/80">
               <div className="flex items-start gap-2.5">
                 <MapPin size={15} className="text-[#B89758] shrink-0 mt-0.5" />
-                <span>{siteConfig.address}, {siteConfig.city}, {siteConfig.state}</span>
+                <a href={siteConfig.mapsLink} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                  {fullAddress}
+                </a>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <Phone size={15} className="text-[#B89758] shrink-0 mt-0.5" />
+                <span className="flex flex-col gap-1">
+                  <a href={`tel:${siteConfig.phone}`} className="hover:text-white">{siteConfig.phoneDisplay}</a>
+                  <a href={`tel:${siteConfig.phoneAlt}`} className="hover:text-white">{siteConfig.phoneAltDisplay}</a>
+                </span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Phone size={15} className="text-[#B89758] shrink-0" />
-                <a href={`tel:${siteConfig.phone.replace(/[^0-9+]/g, '')}`} className="hover:text-white">
-                  {siteConfig.phoneDisplay}
+                <Instagram size={15} className="text-[#B89758] shrink-0" />
+                <a href={siteConfig.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                  @{siteConfig.instagramHandle}
                 </a>
               </div>
               <div className="flex items-center gap-2.5">
@@ -168,14 +157,14 @@ export default function Footer({ onNavigate }) {
         <div className="py-6 border-b border-[#292724] text-xs text-[#D8CEBE]/60 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="text-[#B89758] uppercase font-semibold text-[10px] tracking-wider">Service Footprint:</span>
-            <span>{siteConfig.citiesServed.join(" • ")} • Global Online Consultations</span>
+            <span>{siteConfig.citiesServed.join(" • ")} • Online Consultations Across India & Abroad</span>
           </div>
           <div>
             <button
               onClick={() => onNavigate("consultation")}
               className="text-[#B89758] hover:text-[#DEC695] inline-flex items-center gap-1 font-medium"
             >
-              <span>Schedule a 1-on-1 Studio Session</span>
+              <span>Book a 1-on-1 Consultation</span>
               <ArrowUpRight size={13} />
             </button>
           </div>

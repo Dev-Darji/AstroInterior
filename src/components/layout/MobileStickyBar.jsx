@@ -26,7 +26,7 @@ export default function MobileStickyBar({ onOpenConsultation }) {
           className="flex flex-col items-center justify-center py-2 px-1 bg-[#22201E] text-[#D8CEBE] rounded-xl text-[11px] font-medium border border-[#33312E] active:scale-98 active:bg-[#2e2b28] transition-all focus:outline-none focus:ring-2 focus:ring-[#B89758]"
         >
           <Phone size={18} className="mb-0.5 text-[#B89758]" />
-          <span>Call Studio</span>
+          <span>Call Now</span>
         </a>
 
         {/* Consultation Modal / Page */}

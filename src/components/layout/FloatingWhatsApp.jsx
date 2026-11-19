@@ -30,8 +30,8 @@ export default function FloatingWhatsApp() {
         target="_blank"
         rel="noopener noreferrer"
         className="relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#25D366] text-white shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-3 focus:ring-[#25D366]/40"
-        aria-label="Chat on WhatsApp with Studio"
-        title="Direct WhatsApp with our Studio"
+        aria-label="Chat on WhatsApp"
+        title="Chat on WhatsApp"
       >
         <span className="absolute -top-0.5 -right-0.5 flex h-3 w-3 md:h-3.5 md:w-3.5">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>

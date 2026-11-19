@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ArrowRight, MessageCircle, MapPin } from 'lucide-react';
 import { projects } from '../data/projects';
 import { testimonials } from '../data/testimonials';
-import { getWhatsAppLink } from '../data/siteConfig';
+import { getWhatsAppLink, siteConfig } from '../data/siteConfig';
 
 /* ─────────────────────────────────────────────────────────
    Delicate Sacred & Celestial SVG Artwork (Editorial & Pure)
@@ -169,7 +169,7 @@ export default function HomeView({ onNavigate }) {
     }
   };
 
-  // Curated 3 representative projects (Ahmedabad, Surat, Mumbai)
+  // First 3 illustrative design concepts
   const curatedProjects = projects.slice(0, 3);
 
   return (
@@ -192,7 +192,7 @@ export default function HomeView({ onNavigate }) {
             srcSet={[900, 1300, 1800].map((w) => `https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=${w}&q=82 ${w}w`).join(", ")}
             sizes="(min-width: 1024px) 58vw, 100vw"
             alt=""
-            fetchPriority="high"
+            fetchpriority="high"
             className="w-full h-full object-cover object-[60%_center] saturate-[1.05]"
           />
           {/* Mobile: photo reads in the upper half, text sits on a deep fade below */}
@@ -215,25 +215,25 @@ export default function HomeView({ onNavigate }) {
           <KundliChartSVG className="w-full h-full" />
         </div>
 
-        {/* Featured project card floating over the photograph */}
+        {/* Founder card floating over the photograph */}
         <button
-          onClick={() => onNavigate('interiors')}
+          onClick={() => onNavigate('about')}
           className="hero-animate hero-animate-delay-5 hidden lg:flex absolute z-10 right-8 xl:right-14 bottom-24 w-72 flex-col gap-3 text-left p-5 rounded-2xl bg-[#0A0E1C]/70 backdrop-blur-xl border border-[#DEC695]/25 shadow-2xl hover:border-[#DEC695]/60 transition-colors group"
         >
-          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#DEC695]">Featured Residence</span>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#DEC695]">{siteConfig.experience} of Experience</span>
           <span>
-            <span className="block font-serif text-xl text-[#FDFBF7] leading-tight">The Earth & Light Residence</span>
+            <span className="block font-serif text-xl text-[#FDFBF7] leading-tight">{siteConfig.founderName}</span>
             <span className="flex items-center gap-1.5 text-[11px] text-[#D8CEBE]/70 mt-1">
-              <MapPin size={11} className="text-[#DEC695]" />Bodakdev, Ahmedabad
+              <MapPin size={11} className="text-[#DEC695]" />Kandivali West, Mumbai
             </span>
           </span>
           <span className="flex flex-wrap gap-1.5">
-            {["NE · Morning light", "SW · Earth tones", "Open Brahmasthan"].map((tag) => (
+            {["Vastu", "Astrology", "Numerology", "Interiors"].map((tag) => (
               <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full border border-[#DEC695]/30 text-[#F3E2B8]">{tag}</span>
             ))}
           </span>
           <span className="flex items-center gap-1.5 text-xs text-[#DEC695] group-hover:gap-2.5 transition-all">
-            View the project <ArrowRight size={13} />
+            Meet {siteConfig.founderName.split(" ")[0]} <ArrowRight size={13} />
           </span>
         </button>
 
@@ -257,7 +257,7 @@ export default function HomeView({ onNavigate }) {
 
             {/* Short Supporting Line (Max 1–2 lines) */}
             <p className="hero-animate hero-animate-delay-3 text-base sm:text-lg font-light text-[#D8CEBE] leading-relaxed max-w-xl">
-              Ancient wisdom, personal insight and thoughtful spaces — brought together.
+              {siteConfig.cardTagline}. Vastu, astrology, numerology and interior design by {siteConfig.founderName}.
             </p>
 
             {/* CTAs (Strictly 2 buttons) */}
@@ -572,27 +572,27 @@ export default function HomeView({ onNavigate }) {
 
       {/* ═══════════════════════════════════════════════════════
           04. SELECTED INTERIOR / SPACE WORK
-          Curated 3 Projects (Ahmedabad · Surat · Mumbai)
+          3 Illustrative Design Concepts
           ═══════════════════════════════════════════════════════ */}
       <section className="py-24 sm:py-32 bg-[#FDFBF7]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 sm:mb-16 reveal">
             <div>
-              <span className="editorial-subheading text-[#B89758]">Curated Spaces</span>
+              <span className="editorial-subheading text-[#B89758]">Design Concepts</span>
               <h2 className="font-serif text-fluid-h2 font-normal text-[#161514] mt-2 tracking-tight">
                 Spaces Designed <span className="italic font-light text-[#A85838]">Around You.</span>
               </h2>
               <p className="text-sm text-[#634832] mt-2 max-w-lg">
-                Thoughtful interiors shaped by people, space, and a deeper sense of harmony.
+                Illustrative concepts showing how Vastu principles and interior design come together.
               </p>
             </div>
-            
+
             <button
               onClick={() => onNavigate('interiors')}
               className="mt-4 sm:mt-0 text-xs font-bold uppercase tracking-wider text-[#161514] hover:text-[#A85838] inline-flex items-center gap-1.5 transition-colors group"
             >
-              <span>View All 3 Projects</span>
+              <span>Explore All Concepts</span>
               <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
             </button>
           </div>
@@ -600,7 +600,7 @@ export default function HomeView({ onNavigate }) {
           {/* 3 Curated Projects: 1 Hero Architectural Feature + 2 Asymmetric Pair */}
           <div className="space-y-8 sm:space-y-12">
             
-            {/* Featured Project 1: Ahmedabad */}
+            {/* Featured Concept */}
             {curatedProjects[0] && (
               <div
                 onClick={() => onNavigate('interiors')}
@@ -617,7 +617,7 @@ export default function HomeView({ onNavigate }) {
                   </div>
                   <div className="lg:col-span-5 p-8 sm:p-12 space-y-4">
                     <span className="text-[10px] font-mono tracking-[0.2em] text-[#B89758] font-bold uppercase">
-                      Featured • {curatedProjects[0].location}
+                      {curatedProjects[0].location}
                     </span>
                     <h3 className="font-serif text-2xl sm:text-3xl text-[#161514] tracking-tight group-hover:text-[#A85838] transition-colors">
                       {curatedProjects[0].title}
@@ -653,7 +653,7 @@ export default function HomeView({ onNavigate }) {
                   </div>
                   <div className="p-6 sm:p-8 space-y-2.5">
                     <span className="text-[10px] font-mono tracking-[0.2em] text-[#B89758] font-bold uppercase">
-                      {p.location} • {p.year}
+                      {p.location}
                     </span>
                     <h3 className="font-serif text-xl sm:text-2xl text-[#161514] tracking-tight group-hover:text-[#A85838] transition-colors">
                       {p.title}
@@ -680,47 +680,38 @@ export default function HomeView({ onNavigate }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center reveal space-y-6">
             
-            <span className="editorial-subheading text-[#B89758]">About Our Practice</span>
+            <span className="editorial-subheading text-[#B89758]">About {siteConfig.founderName}</span>
 
             <h2 className="font-serif text-fluid-h2 font-normal text-[#161514] tracking-tight">
-              A Different Way to <span className="italic font-light text-[#A85838]">Look at Space.</span>
+              {siteConfig.experience} of <span className="italic font-light text-[#A85838]">Harmonious Spaces.</span>
             </h2>
 
-            <p className="text-base sm:text-lg text-[#634832] font-light leading-relaxed max-w-2xl mx-auto">
-              Astro Interior was founded on a simple truth: the spaces we inhabit are living extensions of ourselves. By uniting Vedic astrology, directional Vastu principles, and modern interior architecture, we create homes that nurture peace, clarity, and enduring well-being.
+            <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#634832]">
+              {siteConfig.founderTitle}
             </p>
 
-            {/* 3 Authentic Trust Anchors (No inflated claims or fake counters) */}
-            <div className="pt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-left">
-              <div className="p-6 rounded-2xl bg-[#FDFBF7] border border-[#EFE8DC]">
-                <span className="text-xs font-mono font-bold tracking-wider text-[#B89758] uppercase block">
-                  Tradition
-                </span>
-                <h4 className="font-serif text-lg text-[#161514] mt-2">Vedic Foundation</h4>
-                <p className="text-xs text-[#634832] mt-1.5 leading-relaxed">
-                  Thoughtful guidance rooted in established astronomical and spatial treatises.
-                </p>
-              </div>
+            <p className="text-base sm:text-lg text-[#634832] font-light leading-relaxed max-w-2xl mx-auto">
+              With over a decade of experience in Vastu, Astrology, Numerology and Interior Design, {siteConfig.founderName} offers
+              holistic solutions that bring balance, positivity and growth — across all aspects of life. From homes and offices to
+              shops, clinics and plots, every consultation is handled personally.
+            </p>
 
-              <div className="p-6 rounded-2xl bg-[#FDFBF7] border border-[#EFE8DC]">
-                <span className="text-xs font-mono font-bold tracking-wider text-[#607261] uppercase block">
-                  Experience
-                </span>
-                <h4 className="font-serif text-lg text-[#161514] mt-2">Personalized Care</h4>
-                <p className="text-xs text-[#634832] mt-1.5 leading-relaxed">
-                  Bespoke consultations tailored to the real lifestyle and natal rhythms of each client.
-                </p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-[#FDFBF7] border border-[#EFE8DC]">
-                <span className="text-xs font-mono font-bold tracking-wider text-[#A85838] uppercase block">
-                  Approach
-                </span>
-                <h4 className="font-serif text-lg text-[#161514] mt-2">Contemporary Design</h4>
-                <p className="text-xs text-[#634832] mt-1.5 leading-relaxed">
-                  Ancient wisdom interpreted for contemporary aesthetics — elegant, peaceful and uncluttered.
-                </p>
-              </div>
+            {/* Our Approach — the four pillars from the visiting card */}
+            <div className="pt-8 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 text-left">
+              {[
+                ["Expert Guidance", "Advice grounded in a decade of hands-on Vastu, astrology and design practice.", "#B89758"],
+                ["Holistic Approach", "Your chart, your numbers and your space are read together, not in isolation.", "#607261"],
+                ["Balanced Solutions", "Practical remedies that respect your lifestyle, budget and existing structure.", "#A85838"],
+                ["Positive Transformation", "Spaces and decisions that support health, wealth and happiness.", "#634832"]
+              ].map(([title, text, color]) => (
+                <div key={title} className="p-5 sm:p-6 rounded-2xl bg-[#FDFBF7] border border-[#EFE8DC]">
+                  <span className="text-[10px] font-mono font-bold tracking-wider uppercase block" style={{ color }}>
+                    Our Approach
+                  </span>
+                  <h4 className="font-serif text-lg text-[#161514] mt-2">{title}</h4>
+                  <p className="text-xs text-[#634832] mt-1.5 leading-relaxed">{text}</p>
+                </div>
+              ))}
             </div>
 
             <div className="pt-6">
@@ -742,9 +733,9 @@ export default function HomeView({ onNavigate }) {
           06. TESTIMONIALS / CLIENT EXPERIENCES
           2–3 Authentic Voices with Generous Whitespace
           ═══════════════════════════════════════════════════════ */}
-      <section className="py-24 sm:py-32 bg-[#FDFBF7]">
+      {testimonials.length > 0 && <section className="py-24 sm:py-32 bg-[#FDFBF7]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           <div className="text-center max-w-2xl mx-auto mb-16 reveal">
             <span className="editorial-subheading text-[#B89758]">Client Experiences</span>
             <h2 className="font-serif text-fluid-h2 font-normal text-[#161514] mt-2 tracking-tight">
@@ -777,7 +768,7 @@ export default function HomeView({ onNavigate }) {
           </div>
 
         </div>
-      </section>
+      </section>}
 
 
       {/* ═══════════════════════════════════════════════════════
@@ -798,14 +789,14 @@ export default function HomeView({ onNavigate }) {
             </div>
 
             <div className="relative z-10 max-w-2xl mx-auto space-y-6">
-              <span className="editorial-subheading text-[#DEC695]">Astro Interior Studio</span>
+              <span className="editorial-subheading text-[#DEC695]">Let's Create a Positive and Harmonious Life Together</span>
 
               <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#FDFBF7] tracking-tight leading-tight">
                 Begin Your Journey.
               </h2>
 
               <p className="text-sm sm:text-base text-[#D8CEBE] font-light leading-relaxed max-w-lg mx-auto">
-                Whether you seek personal astrology guidance, a Vastu space audit, or a complete interior transformation — our studio is here for you.
+                Whether you seek personal astrology guidance, a Vastu audit for your home, office, shop or clinic, or a complete interior transformation — {siteConfig.founderName} is here to guide you.
               </p>
 
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -816,7 +807,7 @@ export default function HomeView({ onNavigate }) {
                   Book a Consultation
                 </button>
                 <a
-                  href={getWhatsAppLink("Hello! I would like to begin my consultation journey with Astro Interior.")}
+                  href={getWhatsAppLink()}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-[#25D366] text-white font-medium text-sm hover:bg-[#20b857] active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 shadow"

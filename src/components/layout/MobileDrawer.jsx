@@ -86,7 +86,7 @@ export default function MobileDrawer({ isOpen, onClose, currentTab, onNavigate }
             className="flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-[#22201E] text-[#D8CEBE] border border-[#33312E] rounded-md text-xs hover:text-white transition-colors"
           >
             <Phone size={14} />
-            <span>Call Studio: {siteConfig.phoneDisplay}</span>
+            <span>Call: {siteConfig.phoneDisplay}</span>
           </a>
         </div>
       </div>
