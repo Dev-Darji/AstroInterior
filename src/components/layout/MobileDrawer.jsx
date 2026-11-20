@@ -8,7 +8,7 @@ export default function MobileDrawer({ isOpen, onClose, currentTab, onNavigate }
 
   const navLinks = [
     { id: "home", label: "Home", icon: Home },
-    { id: "astrology", label: "Astrology", icon: Sparkles },
+    { id: "services", label: "Services", icon: Sparkles },
     { id: "vastu", label: "Vastu", icon: Compass },
     { id: "numerology", label: "Numerology", icon: Layers },
     { id: "tools", label: "Kundli & Astro Tools", icon: Sparkles },
@@ -48,7 +48,7 @@ export default function MobileDrawer({ isOpen, onClose, currentTab, onNavigate }
         <div className="py-6 flex-1 space-y-1">
           {navLinks.map((item) => {
             const Icon = item.icon;
-            const isActive = currentTab === item.id;
+            const isActive = currentTab === item.id || (item.id === "services" && currentTab === "astrology");
             return (
               <button
                 key={item.id}

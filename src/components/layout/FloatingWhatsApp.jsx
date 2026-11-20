@@ -6,13 +6,14 @@ export default function FloatingWhatsApp() {
   const [showTooltip, setShowTooltip] = useState(true);
 
   return (
-    <div className="fixed bottom-[4.75rem] md:bottom-7 right-3.5 md:right-7 z-40 flex items-center group">
+    // Phones already get WhatsApp in the sticky bottom bar, so the bubble only shows from md up
+    <div className="fixed bottom-7 right-7 z-40 hidden md:flex items-center group">
       {/* Tooltip */}
       {showTooltip && (
         <div className="hidden sm:flex items-center gap-2 mr-3 bg-[#161514] text-[#FDFBF7] text-xs py-2 px-3.5 rounded-xl shadow-xl border border-[#B89758]/30 max-w-xs animate-in fade-in duration-300">
           <div>
             <p className="font-medium text-[#DEC695]">Have a question?</p>
-            <p className="text-[11px] text-[#D8CEBE]/80">Chat directly with our design team.</p>
+            <p className="text-[11px] text-[#D8CEBE]/80">Chat directly with {siteConfig.founderName}.</p>
           </div>
           <button 
             onClick={() => setShowTooltip(false)}
@@ -26,7 +27,7 @@ export default function FloatingWhatsApp() {
 
       {/* Floating Action Button */}
       <a
-        href={getWhatsAppLink("Hello! I would like to speak to your team regarding Vastu and Interior Design.")}
+        href={getWhatsAppLink()}
         target="_blank"
         rel="noopener noreferrer"
         className="relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#25D366] text-white shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-3 focus:ring-[#25D366]/40"

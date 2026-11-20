@@ -22,7 +22,7 @@ export default function MobileStickyBar({ onOpenConsultation }) {
 
         {/* Direct Call */}
         <a
-          href={`tel:${siteConfig.phone.replace(/[^0-9+]/g, '')}`}
+          href={`tel:${siteConfig.phone}`}
           className="flex flex-col items-center justify-center py-2 px-1 bg-[#22201E] text-[#D8CEBE] rounded-xl text-[11px] font-medium border border-[#33312E] active:scale-98 active:bg-[#2e2b28] transition-all focus:outline-none focus:ring-2 focus:ring-[#B89758]"
         >
           <Phone size={18} className="mb-0.5 text-[#B89758]" />

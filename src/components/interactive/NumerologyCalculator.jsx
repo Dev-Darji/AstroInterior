@@ -41,7 +41,7 @@ export default function NumerologyCalculator() {
       <div className="astro-panel p-5 sm:p-8 md:p-10">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           <div className="lg:col-span-5 space-y-4">
-            <span className="astro-label">Ank Jyotish · Chaldean System</span>
+            <span className="astro-label">Ank Jyotish · Vedic Numerology</span>
             <h3 className="font-serif text-3xl sm:text-4xl text-[#F5EFE2] leading-tight">
               Decode the <span className="italic text-gold-gradient">numbers you were born with</span>
             </h3>

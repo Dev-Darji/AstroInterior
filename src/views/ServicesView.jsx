@@ -69,7 +69,7 @@ export default function ServicesView({ onNavigate }) {
             <div className="pt-4 border-t border-[#EFE8DC] flex items-center justify-between">
               <button
                 onClick={() => onNavigate(cat.id === "space" ? "vastu" : cat.id === "design" ? "interiors" : cat.id === "synthesis" ? "vastu-interiors" : "tools")}
-                className="text-xs font-semibold text-[#161514] hover:text-[#A85838] flex items-center gap-1.5"
+                className="tap text-xs font-semibold text-[#161514] hover:text-[#A85838] flex items-center gap-1.5"
               >
                 <span>Explore {cat.title}</span>
                 <ArrowRight size={13} />
@@ -114,7 +114,7 @@ export default function ServicesView({ onNavigate }) {
                 href={getWhatsAppLink(`Hello ${siteConfig.founderName}, I would like to enquire about ${group.title}.`)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#161514] hover:text-[#A85838]"
+                className="tap inline-flex items-center gap-1.5 text-xs font-semibold text-[#161514] hover:text-[#A85838]"
               >
                 <MessageCircle size={14} className="text-[#25D366]" />
                 <span>Enquire on WhatsApp</span>

@@ -37,7 +37,7 @@ export default function ContactView({ onNavigate }) {
             href={getWhatsAppLink("Hello, I am reaching out to discuss a design consultation.")}
             target="_blank"
             rel="noopener noreferrer"
-            className="pt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#1a8a43] hover:underline"
+            className="tap pt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#1a8a43] hover:underline"
           >
             <span>Message on WhatsApp</span>
             <ArrowRight size={13} />
@@ -55,9 +55,9 @@ export default function ContactView({ onNavigate }) {
               Call to book a consultation slot or arrange a site visit.
             </p>
           </div>
-          <div className="pt-2 flex flex-col gap-1.5">
+          <div className="pt-2 flex flex-col gap-4">
             {[[siteConfig.phone, siteConfig.phoneDisplay], [siteConfig.phoneAlt, siteConfig.phoneAltDisplay]].map(([tel, label]) => (
-              <a key={tel} href={`tel:${tel}`} className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#161514] hover:text-[#A85838]">
+              <a key={tel} href={`tel:${tel}`} className="tap inline-flex items-center gap-1.5 text-xs font-semibold text-[#161514] hover:text-[#A85838]">
                 <span>{label}</span>
                 <ArrowRight size={13} />
               </a>
@@ -78,7 +78,7 @@ export default function ContactView({ onNavigate }) {
           </div>
           <a
             href={`mailto:${siteConfig.email}`}
-            className="pt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#161514] hover:text-[#A85838] break-all"
+            className="tap pt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#161514] hover:text-[#A85838] break-all"
           >
             <span>{siteConfig.email}</span>
             <ArrowRight size={13} />
@@ -100,7 +100,7 @@ export default function ContactView({ onNavigate }) {
             href={siteConfig.mapsLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="pt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#161514] hover:text-[#A85838]"
+            className="tap pt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#161514] hover:text-[#A85838]"
           >
             <span>Open in Google Maps</span>
             <ArrowRight size={13} />

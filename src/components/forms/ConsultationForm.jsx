@@ -264,7 +264,7 @@ Message: ${formData.message || '-'}`;
               href={getWhatsAppLink("Hello, I would like to chat directly on WhatsApp regarding a new consultation.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#25D366] font-semibold hover:underline flex items-center gap-1"
+              className="tap text-[#25D366] font-semibold hover:underline flex items-center gap-1"
             >
               <MessageCircle size={14} /> WhatsApp Us
             </a>

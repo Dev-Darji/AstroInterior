@@ -5,7 +5,7 @@ export const faqGroups = [
     questions: [
       {
         q: "Do I need to break walls or carry out structural demolition for Vastu compliance?",
-        a: "Not at all. In our practice, over 90% of energetic imbalances are resolved through intelligent spatial reorganization, furniture re-orientation, elemental remedies (colors, metals, mirrors, and lighting), without demolition."
+        a: "Usually not. Most imbalances can be resolved through intelligent spatial reorganization, furniture re-orientation, elemental remedies (colors, metals, mirrors, and lighting), without demolition."
       },
       {
         q: "Can Vastu work in high-rise modern apartments where structural changes are impossible?",

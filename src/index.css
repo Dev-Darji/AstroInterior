@@ -310,6 +310,19 @@
   background: #B89758;
 }
 
+/* ── Touch targets ──
+   On touch screens, small text links get a ~40px tall hit area. Padding plus an equal
+   negative margin grows the tappable box without moving anything visually. */
+@media (pointer: coarse) {
+  .tap {
+    padding-block: 12px;
+    margin-block: -12px;
+  }
+  footer li > button {
+    padding-block: 6px;
+  }
+}
+
 /* ── Reduced Motion Compliance ── */
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -93,7 +93,7 @@ export default function InsightsView({ onNavigate }) {
                   href={getWhatsAppLink(`Hello! I read your article "${art.title}" and would like to discuss applying these principles to my home.`)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-semibold text-[#161514] group-hover:text-[#A85838] inline-flex items-center gap-1.5"
+                  className="tap text-xs font-semibold text-[#161514] group-hover:text-[#A85838] inline-flex items-center gap-1.5"
                 >
                   <MessageCircle size={14} className="text-[#25D366]" />
                   <span>Discuss This Insight on WhatsApp</span>

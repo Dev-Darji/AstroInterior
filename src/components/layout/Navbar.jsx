@@ -19,7 +19,7 @@ export default function Navbar({ activeTab, onNavigate }) {
 
   const navItems = [
     { id: "home", label: "Home" },
-    { id: "astrology", label: "Astrology" },
+    { id: "services", label: "Services" },
     { id: "vastu", label: "Vastu" },
     { id: "numerology", label: "Numerology" },
     { id: "tools", label: "Tools" },
@@ -57,7 +57,7 @@ export default function Navbar({ activeTab, onNavigate }) {
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
               {navItems.map((item) => {
-                const isActive = activeTab === item.id || (item.id === "tools" && activeTab === "kundli");
+                const isActive = activeTab === item.id || (item.id === "tools" && activeTab === "kundli") || (item.id === "services" && activeTab === "astrology");
                 return (
                   <button
                     key={item.id}
@@ -79,19 +79,19 @@ export default function Navbar({ activeTab, onNavigate }) {
             </nav>
 
             {/* Right Action Buttons */}
-            <div className="hidden sm:flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-3 ml-auto mr-2 lg:ml-0 lg:mr-0">
               <a
-                href={getWhatsAppLink("Hello! I am browsing your website and would like to speak to your design & Vastu team.")}
+                href={getWhatsAppLink()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                   isDarkHero
-                    ? "bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/40 hover:bg-[#25D366]/30"
+                    ? "bg-[#0A0E1C]/60 backdrop-blur-md text-[#7EE2A8] border border-[#25D366]/50 hover:bg-[#25D366]/25"
                     : "bg-[#25D366]/10 text-[#1a8a43] border border-[#25D366]/30 hover:bg-[#25D366]/20"
                 }`}
                 title="Chat on WhatsApp"
               >
-                <MessageCircle size={15} className="text-[#25D366]" />
+                <MessageCircle size={15} className={isDarkHero ? "text-[#7EE2A8]" : "text-[#25D366]"} />
                 <span>WhatsApp</span>
               </a>
 

@@ -4,7 +4,7 @@ export const serviceCategories = [
     title: "Understand Myself",
     subtitle: "Astrology + Numerology",
     tagline: "Archetypes, Planetary Rhythms & Personal Numbers",
-    description: "Decode your foundational blueprint through Vedic Kundli analysis and Chaldean numerology to align life decisions and living spaces.",
+    description: "Understand yourself through Vedic horoscope analysis and Vedic numerology, to guide life decisions and living spaces.",
     accent: "#B89758",
     image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
     features: [
@@ -37,15 +37,15 @@ export const serviceCategories = [
     id: "design",
     title: "Design My Home",
     subtitle: "Interior Design",
-    tagline: "Bespoke Architecture, Tactile Materials & Modern Living",
-    description: "Full-service interior architecture emphasizing natural stone, handcrafted wood, nuanced lighting, and timeless contemporary Indian luxury.",
+    tagline: "Elegant & Functional Spaces",
+    description: "Interior design for homes and workspaces — residential, commercial and retail — with Vastu principles built into the plan.",
     accent: "#A85838",
     image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80",
     features: [
-      "Full Home Interior Architecture (2BHK, 3BHK, 4BHK & Villas)",
-      "Curated Material & Mood Palette Development",
-      "Custom Millwork, Bespoke Furniture & Lighting Schemes",
-      "3D Photorealistic Renderings & Turnkey Execution"
+      "Residential | Commercial | Retail Interiors",
+      "Space Planning, Décor & Styling",
+      "Interior Design in Homes and Workspaces",
+      "Vastu-Aligned Layouts, Colours & Materials"
     ],
     ctaText: "View Interiors",
     link: "/interiors"
@@ -55,14 +55,14 @@ export const serviceCategories = [
     title: "Complete Harmony",
     subtitle: "Vastu × Interior Design",
     tagline: "Where Ancient Energetics Meet Contemporary Aesthetics",
-    description: "The definitive synthesis where spatial science informs structural layout, material choices, and color psychology without sacrificing modern beauty.",
+    description: "Vastu guidance and interior design from one person, so energy, layout, colours and materials are planned together.",
     accent: "#634832",
     image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80",
     features: [
-      "Vastu-Integrated Architectural Space Planning",
-      "Elemental Balance via Natural Textures & Lighting",
-      "Zonal Color Psychology Customized to Inhabitants",
-      "Bespoke Sacred & Contemplation Spaces (Pooja & Meditation)"
+      "Vastu-Integrated Space Planning",
+      "Vastu for Renovation & New Construction",
+      "Remedies & Enhancements Without Demolition",
+      "Pooja & Meditation Space Placement"
     ],
     ctaText: "Design My Space",
     link: "/vastu-interiors"
@@ -72,24 +72,24 @@ export const serviceCategories = [
 export const astrologyServices = [
   {
     id: "birth-chart",
-    title: "Comprehensive Kundli (Birth Chart) Reading",
-    duration: "60 mins • Live Video Consultation",
-    description: "Detailed analysis of Lagna, planetary transits (Dasha), strengths and challenges across career, relationships, and health.",
-    deliverables: ["Full 25-page Vedic Natal Report", "Live Q&A Recording", "Gemstone & Elemental Suggestions"]
+    title: "Detailed Horoscope Analysis",
+    duration: "In-person or Online",
+    description: "Vedic astrology for life guidance — your Lagna, planets and current Dasha read for career, marriage, relationships and health.",
+    deliverables: ["Career, Marriage & Relationship Guidance", "Dasha Analysis & Remedies", "Vedic Astrology for Life Guidance"]
   },
   {
     id: "space-astrology",
-    title: "Astro-Spatial Mapping",
-    duration: "Bespoke Analysis",
-    description: "Unique alignment connecting your dominant planetary rulers with specific room orientations and color frequencies in your home.",
-    deliverables: ["Personal Planetary Palette", "Directional Workstation Orientation", "Sleep Vector Recommendations"]
+    title: "Astrology × Vastu for Your Home",
+    duration: "In-person or Online",
+    description: "Your birth chart and your floor plan read together, so directions, colours and room use suit the people living there.",
+    deliverables: ["Favourable Directions", "Colour & Element Guidance", "Room-by-Room Suggestions"]
   },
   {
     id: "career-timing",
-    title: "Muhurta & Career Transits",
-    duration: "45 mins",
-    description: "Auspicious timing calculations for business launches, new property registrations, and housewarming (Griha Pravesh).",
-    deliverables: ["Auspicious Dates Calendar", "Action Windows Matrix"]
+    title: "Muhurta & Event Selection",
+    duration: "In-person or Online",
+    description: "Auspicious timing for business launches, property purchase, housewarming (Griha Pravesh), marriage and other important events.",
+    deliverables: ["Auspicious Dates & Timings", "Event-Specific Guidance"]
   }
 ];
 
@@ -103,7 +103,7 @@ export const numerologyServices = [
   {
     id: "name-business",
     title: "Name & Business Vibrational Tuning",
-    description: "Chaldean & Pythagorean name analysis for individuals, newborns, and brand/company naming.",
+    description: "Vedic numerology name analysis for individuals, newborns, and business & brand names.",
     details: "Ensure numerical resonance between founders, brand identity, and legal property registration numbers."
   }
 ];
@@ -186,7 +186,7 @@ export const vastuServices = [
   {
     id: "commercial-audit",
     title: "Commercial & Office Vastu",
-    type: "Enterprise Audit",
+    type: "Office, Shop & Industrial",
     description: "Directional alignment of owner cabins, cashier points, sales teams, and server rooms for heightened prosperity and focus.",
     idealFor: "Corporate offices, shops & showrooms, retail outlets and industrial units."
   },

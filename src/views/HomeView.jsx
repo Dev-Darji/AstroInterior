@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ArrowRight, MessageCircle, MapPin } from 'lucide-react';
+import { ArrowRight, MessageCircle, MapPin, Sparkles, Hash, Compass } from 'lucide-react';
 import { projects } from '../data/projects';
 import { testimonials } from '../data/testimonials';
 import { getWhatsAppLink, siteConfig } from '../data/siteConfig';
@@ -278,6 +278,20 @@ export default function HomeView({ onNavigate }) {
               </button>
             </div>
 
+            {/* Trust line for phones and tablets (the founder card above is desktop-only) */}
+            <button
+              onClick={() => onNavigate('about')}
+              className="hero-animate hero-animate-delay-5 lg:hidden flex items-center gap-3 text-left pt-1"
+            >
+              <span className="shrink-0 w-11 h-11 rounded-full border border-[#DEC695]/40 bg-[#DEC695]/10 flex items-center justify-center font-serif text-[#DEC695] text-sm">
+                10+
+              </span>
+              <span className="text-xs text-[#D8CEBE] leading-snug">
+                <strong className="block text-[#FDFBF7] font-semibold text-sm">{siteConfig.founderName}</strong>
+                {siteConfig.experience} of experience · Kandivali West, Mumbai
+              </span>
+            </button>
+
           </div>
         </div>
 
@@ -417,7 +431,7 @@ export default function HomeView({ onNavigate }) {
               className="reveal reveal-delay-3 group rounded-3xl p-8 sm:p-10 flex flex-col justify-between cursor-pointer transition-all duration-300 relative overflow-hidden bg-[#F7F3EB] border border-[#EFE8DC] hover:border-[#607261]/50 hover:bg-[#F3EFE5]"
             >
               {/* Subtle compass geometry in background */}
-              <div className="absolute -bottom-12 -right-12 w-56 h-56 opacity-90 pointer-events-none celestial-rotate [filter:brightness(0.42)_saturate(1.6)]">
+              <div className="absolute -bottom-12 -right-12 w-56 h-56 opacity-30 sm:opacity-60 lg:opacity-90 pointer-events-none celestial-rotate [filter:brightness(0.42)_saturate(1.6)]">
                 <VastuCompassSVG className="w-full h-full" />
               </div>
 
@@ -529,7 +543,7 @@ export default function HomeView({ onNavigate }) {
               <div className="pt-2">
                 <button
                   onClick={() => onNavigate('about')}
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-[#DEC695] hover:text-white transition-colors"
+                  className="tap inline-flex items-center gap-2 text-sm font-semibold text-[#DEC695] hover:text-white transition-colors"
                 >
                   <span>Learn Our Philosophy</span>
                   <ArrowRight size={15} />
@@ -571,6 +585,54 @@ export default function HomeView({ onNavigate }) {
 
 
       {/* ═══════════════════════════════════════════════════════
+          03b. FREE TOOLS — the interactive hook
+          ═══════════════════════════════════════════════════════ */}
+      <section className="py-20 sm:py-28 bg-[#F7F3EB] border-b border-[#EFE8DC]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14 reveal">
+            <span className="editorial-subheading text-[#B89758]">Try It Free · No Sign-up</span>
+            <h2 className="font-serif text-fluid-h2 font-normal text-[#161514] mt-2 tracking-tight">
+              Discover Yourself <span className="italic font-light text-[#A85838]">in Two Minutes.</span>
+            </h2>
+            <p className="text-sm sm:text-base text-[#634832] mt-3 leading-relaxed">
+              Enter your birth details and get an instant reading — with simple Vastu tips for your home.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+            {[
+              { sub: "kundli", icon: Sparkles, title: "Free Kundli", text: "Your Lagna, Moon sign, Nakshatra, current Mahadasha and Manglik check — with a North & South Indian chart.", cta: "Generate My Kundli", dark: true },
+              { sub: "numerology", icon: Hash, title: "Numerology Report", text: "Your Mulank, Bhagyank, name number and Lo Shu grid — plus remedies for missing numbers.", cta: "Reveal My Numbers" },
+              { sub: "compass", icon: Compass, title: "Vastu Compass", text: "Tap any of the 8 directions to see which rooms, colours and elements belong there.", cta: "Explore Directions" }
+            ].map(({ sub, icon: Icon, title, text, cta, dark }, idx) => (
+              <button
+                key={sub}
+                onClick={() => onNavigate('tools', sub)}
+                className={`reveal ${idx ? `reveal-delay-${idx}` : ''} group text-left rounded-3xl p-7 sm:p-8 flex flex-col justify-between gap-6 border transition-all hover:-translate-y-0.5 hover:shadow-xl ${
+                  dark ? 'border-[#1E2538] text-[#FDFBF7]' : 'bg-[#FDFBF7] border-[#EFE8DC] text-[#161514] hover:border-[#B89758]/50'
+                }`}
+                style={dark ? { background: 'linear-gradient(160deg, #0B0F1F 0%, #11172E 60%, #161D36 100%)' } : undefined}
+              >
+                <span className="space-y-3 block">
+                  <span className={`w-11 h-11 rounded-xl flex items-center justify-center ${dark ? 'bg-[#DEC695]/15 text-[#DEC695]' : 'bg-[#F7F3EB] text-[#B89758]'}`}>
+                    <Icon size={20} />
+                  </span>
+                  <span className="block font-serif text-2xl">{title}</span>
+                  <span className={`block text-sm leading-relaxed ${dark ? 'text-[#D8CEBE]/80' : 'text-[#634832]'}`}>{text}</span>
+                </span>
+                <span className={`inline-flex items-center justify-center gap-2 w-full py-3 rounded-full text-sm font-semibold transition-colors ${
+                  dark ? 'bg-[#B89758] text-[#161514] group-hover:bg-[#DEC695]' : 'bg-[#161514] text-[#FDFBF7] group-hover:bg-[#634832]'
+                }`}>
+                  {cta} <ArrowRight size={15} />
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* ═══════════════════════════════════════════════════════
           04. SELECTED INTERIOR / SPACE WORK
           3 Illustrative Design Concepts
           ═══════════════════════════════════════════════════════ */}
@@ -590,7 +652,7 @@ export default function HomeView({ onNavigate }) {
 
             <button
               onClick={() => onNavigate('interiors')}
-              className="mt-4 sm:mt-0 text-xs font-bold uppercase tracking-wider text-[#161514] hover:text-[#A85838] inline-flex items-center gap-1.5 transition-colors group"
+              className="mt-1 py-3 sm:mt-0 sm:py-0 text-xs font-bold uppercase tracking-wider text-[#161514] hover:text-[#A85838] inline-flex items-center gap-1.5 transition-colors group"
             >
               <span>Explore All Concepts</span>
               <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
@@ -769,6 +831,34 @@ export default function HomeView({ onNavigate }) {
 
         </div>
       </section>}
+
+
+      {/* ═══════════════════════════════════════════════════════
+          06b. HOW A CONSULTATION WORKS
+          ═══════════════════════════════════════════════════════ */}
+      <section className="py-20 sm:py-24 bg-[#FDFBF7]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-12 reveal">
+            <span className="editorial-subheading text-[#B89758]">Simple & Personal</span>
+            <h2 className="font-serif text-fluid-h2 font-normal text-[#161514] mt-2 tracking-tight">
+              How a Consultation <span className="italic font-light text-[#A85838]">Works.</span>
+            </h2>
+          </div>
+          <ol className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+            {[
+              ["Share your details", "Message on WhatsApp or fill the form — birth details for astrology & numerology, a floor plan or address for Vastu and interiors."],
+              ["Meet Jinisha", "At the Kandivali West office, at your property in Mumbai, or online — whichever suits you."],
+              ["Get clear guidance", "Practical remedies, auspicious timings and design suggestions you can actually act on."]
+            ].map(([title, text], idx) => (
+              <li key={title} className={`reveal ${idx ? `reveal-delay-${idx}` : ''} p-6 sm:p-7 rounded-2xl bg-[#F7F3EB] border border-[#EFE8DC]`}>
+                <span className="w-9 h-9 rounded-full bg-[#161514] text-[#DEC695] font-serif text-lg flex items-center justify-center">{idx + 1}</span>
+                <h3 className="font-serif text-xl text-[#161514] mt-4">{title}</h3>
+                <p className="text-sm text-[#634832] mt-1.5 leading-relaxed">{text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
 
       {/* ═══════════════════════════════════════════════════════

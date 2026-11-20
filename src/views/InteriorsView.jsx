@@ -109,7 +109,7 @@ export default function InteriorsView({ onNavigate }) {
               <div className="pt-4 border-t border-[#EFE8DC] flex items-center justify-between">
                 <button
                   onClick={() => setActiveModalProject(proj)}
-                  className="text-xs font-semibold text-[#A85838] hover:text-[#161514] flex items-center gap-1.5"
+                  className="tap text-xs font-semibold text-[#A85838] hover:text-[#161514] flex items-center gap-1.5"
                 >
                   <Eye size={14} />
                   <span>View Concept Details</span>

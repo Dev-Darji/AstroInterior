@@ -13,7 +13,7 @@ export default function VastuInteriorsView({ onNavigate }) {
     },
     {
       title: "Non-Destructive Corrections",
-      desc: "Over 90% of energetic dissonance is corrected using circadian lighting, intentional furniture orientation, acoustic baffles, and natural stone."
+      desc: "Most imbalances can be corrected using circadian lighting, intentional furniture orientation, acoustic baffles, and natural stone."
     },
     {
       title: "Uncompromising Contemporary Luxury",

@@ -120,7 +120,7 @@ export default function Footer({ onNavigate }) {
           {/* Col 5: Studio Details */}
           <div className="space-y-4">
             <h3 className="font-serif text-lg text-[#FDFBF7] tracking-wide">Contact</h3>
-            <div className="space-y-3 text-xs text-[#D8CEBE]/80">
+            <div className="space-y-4 text-xs text-[#D8CEBE]/80">
               <div className="flex items-start gap-2.5">
                 <MapPin size={15} className="text-[#B89758] shrink-0 mt-0.5" />
                 <a href={siteConfig.mapsLink} target="_blank" rel="noopener noreferrer" className="hover:text-white">
@@ -129,20 +129,20 @@ export default function Footer({ onNavigate }) {
               </div>
               <div className="flex items-start gap-2.5">
                 <Phone size={15} className="text-[#B89758] shrink-0 mt-0.5" />
-                <span className="flex flex-col gap-1">
-                  <a href={`tel:${siteConfig.phone}`} className="hover:text-white">{siteConfig.phoneDisplay}</a>
-                  <a href={`tel:${siteConfig.phoneAlt}`} className="hover:text-white">{siteConfig.phoneAltDisplay}</a>
+                <span className="flex flex-col gap-4">
+                  <a href={`tel:${siteConfig.phone}`} className="inline-block py-2 -my-2 hover:text-white">{siteConfig.phoneDisplay}</a>
+                  <a href={`tel:${siteConfig.phoneAlt}`} className="inline-block py-2 -my-2 hover:text-white">{siteConfig.phoneAltDisplay}</a>
                 </span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Instagram size={15} className="text-[#B89758] shrink-0" />
-                <a href={siteConfig.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                <a href={siteConfig.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="inline-block py-2 -my-2 hover:text-white">
                   @{siteConfig.instagramHandle}
                 </a>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail size={15} className="text-[#B89758] shrink-0" />
-                <a href={`mailto:${siteConfig.email}`} className="hover:text-white">
+                <a href={`mailto:${siteConfig.email}`} className="inline-block py-2 -my-2 break-all hover:text-white">
                   {siteConfig.email}
                 </a>
               </div>
@@ -162,7 +162,7 @@ export default function Footer({ onNavigate }) {
           <div>
             <button
               onClick={() => onNavigate("consultation")}
-              className="text-[#B89758] hover:text-[#DEC695] inline-flex items-center gap-1 font-medium"
+              className="tap text-[#B89758] hover:text-[#DEC695] inline-flex items-center gap-1 font-medium"
             >
               <span>Book a 1-on-1 Consultation</span>
               <ArrowUpRight size={13} />
