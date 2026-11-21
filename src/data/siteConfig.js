@@ -10,7 +10,8 @@ export const siteConfig = {
   phoneDisplay: "+91 97692 38325",
   phoneAlt: "+917900161377",
   phoneAltDisplay: "+91 79001 61377",
-  whatsappNumber: "919769238325", // International format without + (confirm with client which number is on WhatsApp)
+  // whatsappNumber: "919769238325", // International format without + (confirm with client which number is on WhatsApp)
+  whatsappNumber: "919104635945", // International format without + (confirm with client which number is on WhatsApp)
   email: "parmarjinisha31@gmail.com",
   address: "Shop No. 4, Atlanta Apartments, Opp. Assumption Church, Dahanukarwadi, Kandivali West",
   city: "Mumbai",

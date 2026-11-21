@@ -1,5 +1,6 @@
 import React from 'react';
 import SectionHeader from '../components/ui/SectionHeader';
+import ConsultationForm from '../components/forms/ConsultationForm';
 import { siteConfig, getWhatsAppLink, fullAddress } from '../data/siteConfig';
 import { MessageCircle, Phone, Mail, MapPin, Clock, ArrowRight } from 'lucide-react';
 
@@ -109,6 +110,17 @@ export default function ContactView({ onNavigate }) {
 
       </div>
 
+      {/* Consultation Form Section */}
+      <div id="enquiry-form" className="space-y-8">
+        <SectionHeader
+          badge="Direct Enquiry"
+          title="Send an Enquiry Directly"
+          subtitle="Share your property details or consultation requirements below — clicking submit opens WhatsApp with your request pre-filled."
+          align="center"
+        />
+        <ConsultationForm />
+      </div>
+
       {/* Architectural Studio Location Showcase */}
       <div className="bg-[#F7F3EB] border border-[#EFE8DC] rounded-3xl p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <div className="lg:col-span-6 space-y-4">
@@ -124,7 +136,11 @@ export default function ContactView({ onNavigate }) {
 
           <div className="pt-2 flex flex-wrap items-center gap-3">
             <button
-              onClick={() => onNavigate("consultation")}
+              onClick={() => {
+                const el = document.getElementById('enquiry-form');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                else onNavigate("consultation");
+              }}
               className="px-6 py-3 bg-[#161514] text-[#FDFBF7] rounded-xl text-xs font-semibold hover:bg-[#634832] transition-colors"
             >
               Book a Consultation
