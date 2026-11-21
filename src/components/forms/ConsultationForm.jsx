@@ -90,9 +90,9 @@ export default function ConsultationForm({ defaultService = "Vastu × Interior D
     const emailLine = formData.email ? `• *Email:* ${formData.email.trim()}\n` : "";
     const messageLine = formData.message.trim() ? `\n💬 *Note / Requirement:*\n"${formData.message.trim()}"\n` : "";
 
-    return `Namaste ${siteConfig.founderName} ji,
+    return `Hello ${siteConfig.founderName},
 
-I would like to book a consultation session with you. Here are my details:
+I would like to schedule a consultation session. Here is an overview of my requirements:
 
 📋 *CONSULTATION REQUEST*
 ━━━━━━━━━━━━━━━━━━━━
@@ -108,7 +108,7 @@ ${formData.services.length > 1 ? `• *Selected Focus Areas:*\n${servicesList}` 
 
 📞 *Preferred Contact:* ${formData.preferredContact}
 ${messageLine}━━━━━━━━━━━━━━━━━━━━
-Looking forward to connecting with you.`;
+Please let me know a convenient time to connect and discuss the next steps.`;
   };
 
   // No backend: the enquiry is delivered by opening WhatsApp with every detail pre-filled.
