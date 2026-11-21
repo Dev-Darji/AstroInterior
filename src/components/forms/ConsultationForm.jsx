@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Send, CheckCircle2, MessageCircle, Phone, Mail, Sparkles, Building, MapPin, IndianRupee } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Send, CheckCircle2, MessageCircle, Phone, Mail, Sparkles, Building, MapPin, IndianRupee, ChevronDown, Check, X } from 'lucide-react';
 import { siteConfig, getWhatsAppLink } from '../../data/siteConfig';
 
 export default function ConsultationForm({ defaultService = "Vastu × Interior Design" }) {
   const [formData, setFormData] = useState({
-    service: defaultService,
+    services: defaultService ? [defaultService] : ["Vastu × Interior Design"],
     name: "",
     phone: "",
     email: "",
@@ -15,6 +15,19 @@ export default function ConsultationForm({ defaultService = "Vastu × Interior D
     preferredContact: "WhatsApp",
     message: ""
   });
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,22 +64,61 @@ export default function ConsultationForm({ defaultService = "Vastu × Interior D
     "Not Sure / Custom"
   ];
 
+  const toggleService = (srv) => {
+    setFormData((prev) => {
+      const exists = prev.services.includes(srv);
+      const updated = exists
+        ? prev.services.filter((s) => s !== srv)
+        : [...prev.services, srv];
+      return { ...prev, services: updated };
+    });
+  };
+
+  const removeService = (e, srv) => {
+    e.stopPropagation();
+    setFormData((prev) => ({
+      ...prev,
+      services: prev.services.filter((s) => s !== srv)
+    }));
+  };
+
   const getCustomWhatsAppText = () => {
-    return `Hello ${siteConfig.founderName}, I would like to book a consultation.
-Service: ${formData.service}
-Name: ${formData.name}
-Phone: ${formData.phone}
-Email: ${formData.email || '-'}
-City: ${formData.city}
-Property: ${formData.propertyType}
-Budget: ${formData.budget}
-Preferred Contact: ${formData.preferredContact}
-Message: ${formData.message || '-'}`;
+    const servicesList = formData.services.length > 1
+      ? formData.services.map((s) => `  ▫️ ${s}`).join("\n")
+      : (formData.services[0] || "General Consultation");
+
+    const emailLine = formData.email ? `• *Email:* ${formData.email.trim()}\n` : "";
+    const messageLine = formData.message.trim() ? `\n💬 *Note / Requirement:*\n"${formData.message.trim()}"\n` : "";
+
+    return `Namaste ${siteConfig.founderName} ji,
+
+I would like to book a consultation session with you. Here are my details:
+
+📋 *CONSULTATION REQUEST*
+━━━━━━━━━━━━━━━━━━━━
+👤 *Client Details*
+• *Name:* ${formData.name.trim()}
+• *Phone:* ${formData.phone.trim()}
+${emailLine}• *City / Location:* ${formData.city.trim()}
+
+🏛️ *Focus Area & Property*
+${formData.services.length > 1 ? `• *Selected Focus Areas:*\n${servicesList}` : `• *Focus Area:* ${servicesList}`}
+• *Property Typology:* ${formData.propertyType}
+• *Estimated Budget:* ${formData.budget}
+
+📞 *Preferred Contact:* ${formData.preferredContact}
+${messageLine}━━━━━━━━━━━━━━━━━━━━
+Looking forward to connecting with you.`;
   };
 
   // No backend: the enquiry is delivered by opening WhatsApp with every detail pre-filled.
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (formData.services.length === 0) {
+      alert("Please select at least one discipline / focus area.");
+      setIsDropdownOpen(true);
+      return;
+    }
     setIsSubmitting(true);
     window.open(getWhatsAppLink(getCustomWhatsAppText()), "_blank", "noopener,noreferrer");
     setIsSubmitting(false);
@@ -88,27 +140,125 @@ Message: ${formData.message || '-'}`;
             </p>
           </div>
 
-          {/* Service Track Selection */}
-          <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#161514] mb-2">
-              Select Discipline / Focus Area <span className="text-[#A85838]">*</span>
-            </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-              {services.map((srv) => (
-                <button
-                  type="button"
-                  key={srv}
-                  onClick={() => setFormData({ ...formData, service: srv })}
-                  className={`p-2.5 rounded-xl text-xs font-medium border text-left transition-all ${
-                    formData.service === srv
-                      ? "bg-[#161514] text-[#FDFBF7] border-[#161514] shadow-sm font-semibold"
-                      : "bg-[#F7F3EB] text-[#634832] border-[#D8CEBE] hover:border-[#B89758]"
-                  }`}
-                >
-                  {srv}
-                </button>
-              ))}
+          {/* Service Track Selection (Multi-Select Dropdown) */}
+          <div className="relative" ref={dropdownRef}>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-[#161514]">
+                Select Discipline / Focus Area <span className="text-[#A85838]">*</span>
+              </label>
+              <span className="text-[11px] text-[#634832] font-medium">
+                {formData.services.length} selected
+              </span>
             </div>
+
+            {/* Dropdown Trigger Box */}
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => setIsDropdownOpen((prev) => !prev)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setIsDropdownOpen((prev) => !prev);
+                }
+              }}
+              className={`w-full min-h-[48px] px-3.5 py-2 bg-[#F7F3EB] border rounded-xl cursor-pointer flex items-center justify-between gap-2 transition-all ${
+                isDropdownOpen
+                  ? "border-[#B89758] ring-2 ring-[#B89758]/30 bg-[#FDFBF7]"
+                  : "border-[#D8CEBE] hover:border-[#B89758]"
+              }`}
+            >
+              <div className="flex flex-wrap items-center gap-1.5 flex-1 pr-1 py-0.5">
+                {formData.services.length === 0 ? (
+                  <span className="text-sm text-[#634832]/60 select-none">
+                    Select discipline / focus area(s)...
+                  </span>
+                ) : (
+                  formData.services.map((srv) => (
+                    <span
+                      key={srv}
+                      className="inline-flex items-center gap-1.5 text-xs font-medium bg-[#161514] text-[#FDFBF7] pl-2.5 pr-1.5 py-1 rounded-lg shadow-xs select-none"
+                    >
+                      <span>{srv}</span>
+                      <button
+                        type="button"
+                        onClick={(e) => removeService(e, srv)}
+                        className="hover:bg-white/20 rounded p-0.5 transition-colors"
+                        title={`Remove ${srv}`}
+                      >
+                        <X size={12} />
+                      </button>
+                    </span>
+                  ))
+                )}
+              </div>
+
+              <div className="flex items-center gap-2 text-[#634832] shrink-0 pl-1 border-l border-[#D8CEBE]">
+                <ChevronDown
+                  size={18}
+                  className={`transition-transform duration-200 ${
+                    isDropdownOpen ? "rotate-180 text-[#B89758]" : "text-[#634832]"
+                  }`}
+                />
+              </div>
+            </div>
+
+            {/* Dropdown Menu Overlay */}
+            {isDropdownOpen && (
+              <div className="absolute z-30 left-0 right-0 mt-1.5 bg-[#FDFBF7] border border-[#D8CEBE] rounded-2xl shadow-xl p-3 space-y-2">
+                <div className="flex items-center justify-between px-1 pb-1.5 border-b border-[#EFE8DC] text-xs text-[#634832]">
+                  <span className="font-medium">Choose one or more disciplines:</span>
+                  {formData.services.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setFormData((prev) => ({ ...prev, services: [] }))}
+                      className="text-[#A85838] hover:underline font-semibold text-[11px]"
+                    >
+                      Clear all
+                    </button>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-64 overflow-y-auto pr-1">
+                  {services.map((srv) => {
+                    const isSelected = formData.services.includes(srv);
+                    return (
+                      <button
+                        type="button"
+                        key={srv}
+                        onClick={() => toggleService(srv)}
+                        className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs text-left transition-all ${
+                          isSelected
+                            ? "bg-[#161514] text-[#FDFBF7] font-semibold shadow-xs"
+                            : "bg-[#F7F3EB] text-[#161514] hover:bg-[#EFE8DC] border border-transparent"
+                        }`}
+                      >
+                        <span className="pr-2">{srv}</span>
+                        <div
+                          className={`w-4 h-4 rounded flex items-center justify-center shrink-0 border transition-colors ${
+                            isSelected
+                              ? "bg-[#B89758] border-[#B89758] text-[#161514]"
+                              : "border-[#D8CEBE] bg-[#FDFBF7]"
+                          }`}
+                        >
+                          {isSelected && <Check size={11} strokeWidth={3.5} />}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="pt-1 border-t border-[#EFE8DC] flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="px-4 py-1.5 bg-[#161514] text-[#FDFBF7] text-xs font-semibold rounded-lg hover:bg-[#634832] transition-colors"
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Personal Info */}
@@ -283,7 +433,7 @@ Message: ${formData.message || '-'}`;
               Thank You, {formData.name}
             </h3>
             <p className="text-sm text-[#634832] max-w-md mx-auto mt-2 leading-relaxed">
-              Your enquiry for <strong>{formData.service}</strong> is ready in WhatsApp — just press <strong>Send</strong> there.
+              Your enquiry for <strong>{formData.services.join(", ")}</strong> is ready in WhatsApp — just press <strong>Send</strong> there.
               If WhatsApp didn't open, use the button below or call {siteConfig.phoneDisplay}.
             </p>
           </div>

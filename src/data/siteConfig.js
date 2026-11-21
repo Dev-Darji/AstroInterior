@@ -31,7 +31,7 @@ export const siteConfig = {
 export const fullAddress = `${siteConfig.address}, ${siteConfig.city} ${siteConfig.pincode}`;
 
 export const getWhatsAppLink = (customText) => {
-  const defaultText = `Hello ${siteConfig.founderName}, I would like to enquire about your Vastu, astrology and interior consultation services.`;
+  const defaultText = `Namaste ${siteConfig.founderName} ji, I would like to enquire about your Vastu, Astrology, and Interior Design consultation services.`;
   const text = encodeURIComponent(customText || defaultText);
   return `https://wa.me/${siteConfig.whatsappNumber}?text=${text}`;
 };
